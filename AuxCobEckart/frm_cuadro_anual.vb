@@ -302,6 +302,9 @@ Public Class frm_cuadro_anual
         lbl_cartel.Visible = False
         lbl_cartel.Text = ""
 
+        lbl_reg.Text = ""
+
+
 
     End Sub
 

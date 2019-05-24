@@ -59,6 +59,7 @@ Partial Class frm_saldos_vend
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.lbl_version)
         Me.GroupBox1.Controls.Add(Me.Label9)
         Me.GroupBox1.Controls.Add(Me.txt_bus_grilla2)
         Me.GroupBox1.Controls.Add(Me.Label8)
@@ -90,7 +91,7 @@ Partial Class frm_saldos_vend
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.GroupBox1.Size = New System.Drawing.Size(1226, 641)
+        Me.GroupBox1.Size = New System.Drawing.Size(1226, 595)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Saldos Vendedores"
@@ -98,7 +99,7 @@ Partial Class frm_saldos_vend
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(731, 570)
+        Me.Label9.Location = New System.Drawing.Point(716, 499)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(47, 15)
@@ -107,7 +108,7 @@ Partial Class frm_saldos_vend
         '
         'txt_bus_grilla2
         '
-        Me.txt_bus_grilla2.Location = New System.Drawing.Point(697, 588)
+        Me.txt_bus_grilla2.Location = New System.Drawing.Point(685, 513)
         Me.txt_bus_grilla2.Name = "txt_bus_grilla2"
         Me.txt_bus_grilla2.Size = New System.Drawing.Size(118, 23)
         Me.txt_bus_grilla2.TabIndex = 87
@@ -115,7 +116,7 @@ Partial Class frm_saldos_vend
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(99, 578)
+        Me.Label8.Location = New System.Drawing.Point(99, 501)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(47, 15)
@@ -124,7 +125,7 @@ Partial Class frm_saldos_vend
         '
         'txt_bus_grilla1
         '
-        Me.txt_bus_grilla1.Location = New System.Drawing.Point(79, 596)
+        Me.txt_bus_grilla1.Location = New System.Drawing.Point(79, 519)
         Me.txt_bus_grilla1.Name = "txt_bus_grilla1"
         Me.txt_bus_grilla1.Size = New System.Drawing.Size(98, 23)
         Me.txt_bus_grilla1.TabIndex = 85
@@ -177,7 +178,8 @@ Partial Class frm_saldos_vend
         'lbl_reg2
         '
         Me.lbl_reg2.AutoSize = True
-        Me.lbl_reg2.Location = New System.Drawing.Point(465, 604)
+        Me.lbl_reg2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.lbl_reg2.Location = New System.Drawing.Point(467, 521)
         Me.lbl_reg2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbl_reg2.Name = "lbl_reg2"
         Me.lbl_reg2.Size = New System.Drawing.Size(51, 15)
@@ -187,7 +189,7 @@ Partial Class frm_saldos_vend
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(451, 576)
+        Me.Label3.Location = New System.Drawing.Point(447, 501)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(165, 15)
@@ -199,7 +201,7 @@ Partial Class frm_saldos_vend
         Me.lbl_totales2.AutoSize = True
         Me.lbl_totales2.BackColor = System.Drawing.SystemColors.InactiveBorder
         Me.lbl_totales2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_totales2.Location = New System.Drawing.Point(1041, 602)
+        Me.lbl_totales2.Location = New System.Drawing.Point(1058, 516)
         Me.lbl_totales2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbl_totales2.Name = "lbl_totales2"
         Me.lbl_totales2.Size = New System.Drawing.Size(73, 17)
@@ -209,7 +211,7 @@ Partial Class frm_saldos_vend
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(1056, 576)
+        Me.Label2.Location = New System.Drawing.Point(1065, 499)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(49, 15)
@@ -233,7 +235,7 @@ Partial Class frm_saldos_vend
         Me.cmd_exp_excel2.Font = New System.Drawing.Font("Calibri", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_exp_excel2.Image = Global.AuxCobEckart.My.Resources.Resources.excel_imports
         Me.cmd_exp_excel2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmd_exp_excel2.Location = New System.Drawing.Point(862, 576)
+        Me.cmd_exp_excel2.Location = New System.Drawing.Point(859, 499)
         Me.cmd_exp_excel2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.cmd_exp_excel2.Name = "cmd_exp_excel2"
         Me.cmd_exp_excel2.Size = New System.Drawing.Size(128, 37)
@@ -251,7 +253,7 @@ Partial Class frm_saldos_vend
         Me.grilla2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.grilla2.Name = "grilla2"
         Me.grilla2.ReadOnly = True
-        Me.grilla2.Size = New System.Drawing.Size(777, 446)
+        Me.grilla2.Size = New System.Drawing.Size(777, 368)
         Me.grilla2.TabIndex = 73
         '
         'lbl_totales
@@ -259,7 +261,7 @@ Partial Class frm_saldos_vend
         Me.lbl_totales.AutoSize = True
         Me.lbl_totales.BackColor = System.Drawing.SystemColors.InactiveBorder
         Me.lbl_totales.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_totales.Location = New System.Drawing.Point(334, 596)
+        Me.lbl_totales.Location = New System.Drawing.Point(334, 519)
         Me.lbl_totales.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbl_totales.Name = "lbl_totales"
         Me.lbl_totales.Size = New System.Drawing.Size(66, 17)
@@ -269,7 +271,7 @@ Partial Class frm_saldos_vend
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(351, 576)
+        Me.Label17.Location = New System.Drawing.Point(351, 499)
         Me.Label17.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(49, 15)
@@ -279,7 +281,8 @@ Partial Class frm_saldos_vend
         'lbl_reg
         '
         Me.lbl_reg.AutoSize = True
-        Me.lbl_reg.Location = New System.Drawing.Point(19, 613)
+        Me.lbl_reg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.lbl_reg.Location = New System.Drawing.Point(19, 536)
         Me.lbl_reg.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbl_reg.Name = "lbl_reg"
         Me.lbl_reg.Size = New System.Drawing.Size(44, 15)
@@ -288,7 +291,7 @@ Partial Class frm_saldos_vend
         '
         'Label15
         '
-        Me.Label15.Location = New System.Drawing.Point(9, 576)
+        Me.Label15.Location = New System.Drawing.Point(9, 499)
         Me.Label15.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(65, 37)
@@ -301,7 +304,7 @@ Partial Class frm_saldos_vend
         Me.cmd_exp_excel.Font = New System.Drawing.Font("Calibri", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_exp_excel.Image = Global.AuxCobEckart.My.Resources.Resources.excel_imports
         Me.cmd_exp_excel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmd_exp_excel.Location = New System.Drawing.Point(203, 576)
+        Me.cmd_exp_excel.Location = New System.Drawing.Point(203, 499)
         Me.cmd_exp_excel.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.cmd_exp_excel.Name = "cmd_exp_excel"
         Me.cmd_exp_excel.Size = New System.Drawing.Size(118, 43)
@@ -377,13 +380,13 @@ Partial Class frm_saldos_vend
         Me.grilla.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.grilla.Name = "grilla"
         Me.grilla.ReadOnly = True
-        Me.grilla.Size = New System.Drawing.Size(396, 446)
+        Me.grilla.Size = New System.Drawing.Size(396, 368)
         Me.grilla.TabIndex = 54
         '
         'lbl_version
         '
         Me.lbl_version.AutoSize = True
-        Me.lbl_version.Location = New System.Drawing.Point(26, 688)
+        Me.lbl_version.Location = New System.Drawing.Point(19, 576)
         Me.lbl_version.Name = "lbl_version"
         Me.lbl_version.Size = New System.Drawing.Size(65, 15)
         Me.lbl_version.TabIndex = 5
@@ -394,8 +397,7 @@ Partial Class frm_saldos_vend
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.InactiveCaption
-        Me.ClientSize = New System.Drawing.Size(1270, 730)
-        Me.Controls.Add(Me.lbl_version)
+        Me.ClientSize = New System.Drawing.Size(1270, 667)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Calibri", 9.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -407,7 +409,6 @@ Partial Class frm_saldos_vend
         CType(Me.grilla2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 

@@ -229,6 +229,8 @@ Public Class frm_tramos_vcto
         cbo_tramos.Items.Add("Menor a 90")
         cbo_tramos.Items.Add("Mayor a 90")
 
+        lbl_reg.Text = ""
+
 
     End Sub
 

@@ -132,7 +132,7 @@ Partial Class frm_cuadro_anual
         'lbl_version
         '
         Me.lbl_version.AutoSize = True
-        Me.lbl_version.Location = New System.Drawing.Point(37, 706)
+        Me.lbl_version.Location = New System.Drawing.Point(25, 517)
         Me.lbl_version.Name = "lbl_version"
         Me.lbl_version.Size = New System.Drawing.Size(65, 15)
         Me.lbl_version.TabIndex = 5
@@ -141,13 +141,14 @@ Partial Class frm_cuadro_anual
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.lbl_monto)
+        Me.GroupBox2.Controls.Add(Me.lbl_version)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.lbl_reg)
         Me.GroupBox2.Controls.Add(Me.Label15)
         Me.GroupBox2.Controls.Add(Me.grilla)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 129)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(1219, 574)
+        Me.GroupBox2.Size = New System.Drawing.Size(1219, 540)
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Detalle Anual"
@@ -177,7 +178,7 @@ Partial Class frm_cuadro_anual
         Me.lbl_reg.AutoSize = True
         Me.lbl_reg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.lbl_reg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_reg.Location = New System.Drawing.Point(6, 545)
+        Me.lbl_reg.Location = New System.Drawing.Point(138, 462)
         Me.lbl_reg.Name = "lbl_reg"
         Me.lbl_reg.Size = New System.Drawing.Size(46, 17)
         Me.lbl_reg.TabIndex = 65
@@ -186,7 +187,7 @@ Partial Class frm_cuadro_anual
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(3, 530)
+        Me.Label15.Location = New System.Drawing.Point(25, 464)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(107, 15)
         Me.Label15.TabIndex = 64
@@ -201,7 +202,7 @@ Partial Class frm_cuadro_anual
         Me.grilla.Location = New System.Drawing.Point(6, 22)
         Me.grilla.Name = "grilla"
         Me.grilla.ReadOnly = True
-        Me.grilla.Size = New System.Drawing.Size(1207, 492)
+        Me.grilla.Size = New System.Drawing.Size(1207, 428)
         Me.grilla.TabIndex = 0
         '
         'frm_cuadro_anual
@@ -209,9 +210,8 @@ Partial Class frm_cuadro_anual
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.InactiveCaption
-        Me.ClientSize = New System.Drawing.Size(1243, 824)
+        Me.ClientSize = New System.Drawing.Size(1243, 697)
         Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.lbl_version)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Calibri", 9.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -224,7 +224,6 @@ Partial Class frm_cuadro_anual
         Me.GroupBox2.PerformLayout()
         CType(Me.grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 

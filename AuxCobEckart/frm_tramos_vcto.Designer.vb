@@ -24,6 +24,9 @@ Partial Class frm_tramos_vcto
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_tramos_vcto))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cbo_tramos = New System.Windows.Forms.ComboBox()
         Me.txt_nro_dias = New System.Windows.Forms.TextBox()
         Me.cmd_exp_excel = New System.Windows.Forms.Button()
         Me.cmd_salir = New System.Windows.Forms.Button()
@@ -40,9 +43,6 @@ Partial Class frm_tramos_vcto
         Me.Label15 = New System.Windows.Forms.Label()
         Me.grilla = New System.Windows.Forms.DataGridView()
         Me.lbl_version = New System.Windows.Forms.Label()
-        Me.cbo_tramos = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,6 +70,38 @@ Partial Class frm_tramos_vcto
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Busqueda por Tramos"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.SystemColors.GrayText
+        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label2.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.Label2.Location = New System.Drawing.Point(487, 32)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(85, 17)
+        Me.Label2.TabIndex = 82
+        Me.Label2.Text = "Personalizado"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.SystemColors.GrayText
+        Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label1.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.Label1.Location = New System.Drawing.Point(392, 33)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(75, 17)
+        Me.Label1.TabIndex = 81
+        Me.Label1.Text = "Tramos Dias"
+        '
+        'cbo_tramos
+        '
+        Me.cbo_tramos.FormattingEnabled = True
+        Me.cbo_tramos.Location = New System.Drawing.Point(386, 51)
+        Me.cbo_tramos.Name = "cbo_tramos"
+        Me.cbo_tramos.Size = New System.Drawing.Size(93, 23)
+        Me.cbo_tramos.TabIndex = 80
         '
         'txt_nro_dias
         '
@@ -197,7 +229,7 @@ Partial Class frm_tramos_vcto
         Me.GroupBox2.Controls.Add(Me.grilla)
         Me.GroupBox2.Location = New System.Drawing.Point(23, 147)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(1192, 580)
+        Me.GroupBox2.Size = New System.Drawing.Size(1192, 456)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Resultado"
@@ -207,7 +239,7 @@ Partial Class frm_tramos_vcto
         Me.lbl_reg.AutoSize = True
         Me.lbl_reg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.lbl_reg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_reg.Location = New System.Drawing.Point(45, 555)
+        Me.lbl_reg.Location = New System.Drawing.Point(129, 405)
         Me.lbl_reg.Name = "lbl_reg"
         Me.lbl_reg.Size = New System.Drawing.Size(46, 17)
         Me.lbl_reg.TabIndex = 65
@@ -216,7 +248,7 @@ Partial Class frm_tramos_vcto
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(16, 540)
+        Me.Label15.Location = New System.Drawing.Point(16, 405)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(107, 15)
         Me.Label15.TabIndex = 64
@@ -231,7 +263,7 @@ Partial Class frm_tramos_vcto
         Me.grilla.Location = New System.Drawing.Point(6, 22)
         Me.grilla.Name = "grilla"
         Me.grilla.ReadOnly = True
-        Me.grilla.Size = New System.Drawing.Size(1024, 506)
+        Me.grilla.Size = New System.Drawing.Size(1024, 366)
         Me.grilla.TabIndex = 0
         '
         'lbl_version
@@ -243,44 +275,12 @@ Partial Class frm_tramos_vcto
         Me.lbl_version.TabIndex = 5
         Me.lbl_version.Text = "lbl_version"
         '
-        'cbo_tramos
-        '
-        Me.cbo_tramos.FormattingEnabled = True
-        Me.cbo_tramos.Location = New System.Drawing.Point(386, 51)
-        Me.cbo_tramos.Name = "cbo_tramos"
-        Me.cbo_tramos.Size = New System.Drawing.Size(93, 23)
-        Me.cbo_tramos.TabIndex = 80
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.SystemColors.GrayText
-        Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Label1.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.Label1.Location = New System.Drawing.Point(392, 33)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(75, 17)
-        Me.Label1.TabIndex = 81
-        Me.Label1.Text = "Tramos Dias"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.SystemColors.GrayText
-        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Label2.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.Label2.Location = New System.Drawing.Point(487, 32)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(85, 17)
-        Me.Label2.TabIndex = 82
-        Me.Label2.Text = "Personalizado"
-        '
         'frm_tramos_vcto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.InactiveCaption
-        Me.ClientSize = New System.Drawing.Size(1271, 790)
+        Me.ClientSize = New System.Drawing.Size(1271, 657)
         Me.Controls.Add(Me.lbl_version)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
