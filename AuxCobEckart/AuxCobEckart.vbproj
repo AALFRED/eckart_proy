@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D0B1385-009C-49AF-AC17-34D5AC7883E5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>AuxCobEckart.My.MyApplication</StartupObject>
+    <RootNamespace>AuxCobEckart</RootNamespace>
+    <AssemblyName>AuxCobEckart</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>AuxCobEckart.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>AuxCobEckart.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>eckart.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Proyectos Vb2017\DESPACHOS\Despachos\recursos\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frm_carga_base.Designer.vb">
+      <DependentUpon>frm_carga_base.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_carga_base.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_carga_vend.Designer.vb">
+      <DependentUpon>frm_carga_vend.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_carga_vend.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_cliente.Designer.vb">
+      <DependentUpon>frm_cliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_cliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_cuadro_anual.Designer.vb">
+      <DependentUpon>frm_cuadro_anual.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_cuadro_anual.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_detalle_fact.Designer.vb">
+      <DependentUpon>frm_detalle_fact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_detalle_fact.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_incobrables.Designer.vb">
+      <DependentUpon>frm_incobrables.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_incobrables.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_intrucciones.Designer.vb">
+      <DependentUpon>frm_intrucciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_intrucciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_menu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_menu.Designer.vb">
+      <DependentUpon>frm_menu.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_saldos_atrasados.Designer.vb">
+      <DependentUpon>frm_saldos_atrasados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_saldos_atrasados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_saldos_vend.Designer.vb">
+      <DependentUpon>frm_saldos_vend.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_saldos_vend.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_saldo_cliente.Designer.vb">
+      <DependentUpon>frm_saldo_cliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_saldo_cliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_tramos_vcto.Designer.vb">
+      <DependentUpon>frm_tramos_vcto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_tramos_vcto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module1.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Principal.Designer.vb">
+      <DependentUpon>Principal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Principal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frm_carga_base.resx">
+      <DependentUpon>frm_carga_base.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_carga_vend.resx">
+      <DependentUpon>frm_carga_vend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_cliente.resx">
+      <DependentUpon>frm_cliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_cuadro_anual.resx">
+      <DependentUpon>frm_cuadro_anual.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_detalle_fact.resx">
+      <DependentUpon>frm_detalle_fact.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_incobrables.resx">
+      <DependentUpon>frm_incobrables.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_intrucciones.resx">
+      <DependentUpon>frm_intrucciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_menu.resx">
+      <DependentUpon>frm_menu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_saldos_atrasados.resx">
+      <DependentUpon>frm_saldos_atrasados.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_saldos_vend.resx">
+      <DependentUpon>frm_saldos_vend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_saldo_cliente.resx">
+      <DependentUpon>frm_saldo_cliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_tramos_vcto.resx">
+      <DependentUpon>frm_tramos_vcto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Principal.resx">
+      <DependentUpon>Principal.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\eckart.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{EF53050B-882E-4776-B643-EDA472E8E3F2}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\textfield_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\export_excel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel_imports.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="eckart.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
