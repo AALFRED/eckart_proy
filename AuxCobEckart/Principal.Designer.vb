@@ -34,11 +34,15 @@ Partial Class Principal
         Me.cmd_saldo_atrasado = New System.Windows.Forms.Button()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.lbl_version = New System.Windows.Forms.Label()
+        Me.cmd_clientes = New System.Windows.Forms.Button()
+        Me.cmd_carga_base = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.cmd_carga_base)
+        Me.GroupBox1.Controls.Add(Me.cmd_clientes)
         Me.GroupBox1.Controls.Add(Me.cmd_cuadro_anual)
         Me.GroupBox1.Controls.Add(Me.cmd_salir)
         Me.GroupBox1.Controls.Add(Me.cmd_det_deuda_clie)
@@ -133,6 +137,26 @@ Partial Class Principal
         Me.lbl_version.TabIndex = 3
         Me.lbl_version.Text = "lbl_version"
         '
+        'cmd_clientes
+        '
+        Me.cmd_clientes.Location = New System.Drawing.Point(40, 213)
+        Me.cmd_clientes.Name = "cmd_clientes"
+        Me.cmd_clientes.Size = New System.Drawing.Size(169, 52)
+        Me.cmd_clientes.TabIndex = 7
+        Me.cmd_clientes.Text = "Maestro Clientes"
+        Me.ToolTip1.SetToolTip(Me.cmd_clientes, "Fecha de Vencimiento menos fecha actual")
+        Me.cmd_clientes.UseVisualStyleBackColor = True
+        '
+        'cmd_carga_base
+        '
+        Me.cmd_carga_base.Location = New System.Drawing.Point(40, 323)
+        Me.cmd_carga_base.Name = "cmd_carga_base"
+        Me.cmd_carga_base.Size = New System.Drawing.Size(169, 52)
+        Me.cmd_carga_base.TabIndex = 8
+        Me.cmd_carga_base.Text = "Maestro Carga de Datos"
+        Me.ToolTip1.SetToolTip(Me.cmd_carga_base, "Fecha de Vencimiento menos fecha actual")
+        Me.cmd_carga_base.UseVisualStyleBackColor = True
+        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -162,4 +186,6 @@ Partial Class Principal
     Friend WithEvents cmd_saldos_vend As Button
     Friend WithEvents lbl_version As Label
     Friend WithEvents cmd_cuadro_anual As Button
+    Friend WithEvents cmd_clientes As Button
+    Friend WithEvents cmd_carga_base As Button
 End Class

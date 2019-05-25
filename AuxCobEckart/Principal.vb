@@ -93,4 +93,16 @@
         frm_cuadro_anual.Show()
 
     End Sub
+
+    Private Sub cmd_clientes_Click(sender As Object, e As EventArgs) Handles cmd_clientes.Click
+        Me.Hide()
+        frm_cliente.Show()
+
+    End Sub
+
+    Private Sub cmd_carga_base_Click(sender As Object, e As EventArgs) Handles cmd_carga_base.Click
+        Me.Hide()
+        frm_carga_base.Show()
+
+    End Sub
 End Class

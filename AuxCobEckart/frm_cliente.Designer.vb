@@ -404,6 +404,7 @@ Partial Class frm_cliente
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Asignacion de Cuenta"
+        Me.GroupBox4.Visible = False
         '
         'lbl_nroreg2
         '
@@ -554,7 +555,7 @@ Partial Class frm_cliente
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1383, 625)
+        Me.ClientSize = New System.Drawing.Size(863, 625)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)

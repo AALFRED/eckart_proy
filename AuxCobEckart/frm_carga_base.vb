@@ -88,7 +88,9 @@ Public Class frm_carga_base
     End Sub
 
     Private Sub frm_carga_base_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
-        frm_menu.Show()
+        'frm_menu.Show()
+        Principal.Show()
+
     End Sub
 
     Private Sub cmd_cargar_datos_Click(sender As Object, e As EventArgs) Handles cmd_cargar_datos.Click
@@ -466,23 +468,20 @@ Public Class frm_carga_base
 
     Private Sub cmd_cancelar_Click(sender As Object, e As EventArgs) Handles cmd_cancelar.Click
         Me.Close()
-        frm_menu.Show()
+        'frm_menu.Show()
+        Principal.Show()
+
     End Sub
 
     Private Sub cbo_tpo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_tpo.SelectedIndexChanged
         Select Case cbo_tpo.Text
             Case "BD MYSQL"
 
-
-
                 cmd_cargar_datos.Enabled = True
                 cmd_truncate_bd.Enabled = True
                 var = 1
 
-
-
             Case "BD ACCESS"
-
 
                 cmd_cargar_datos.Enabled = True
                 cmd_truncate_bd.Enabled = True

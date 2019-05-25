@@ -216,7 +216,9 @@ Public Class frm_cliente
     End Sub
 
     Private Sub frm_cliente_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
-        frm_menu.Show()
+        'frm_menu.Show()
+        Principal.Show()
+
     End Sub
 
     Private Sub cmd_cargar_Click(sender As Object, e As EventArgs) Handles cmd_cargar_access.Click
@@ -302,7 +304,9 @@ Public Class frm_cliente
 
     Private Sub cmd_cancelar_Click(sender As Object, e As EventArgs) Handles cmd_cancelar.Click
         Me.Dispose()
-        frm_menu.Show()
+        ' frm_menu.Show()
+        Principal.Show()
+
     End Sub
 
     Private Sub cmd_truncate_bd_Click(sender As Object, e As EventArgs) Handles cmd_truncate_bd.Click
