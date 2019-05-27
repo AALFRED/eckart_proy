@@ -617,7 +617,11 @@ Public Class frm_incobrables
     Sub Carga_cta_mysql()
 
 
-        Call conn1()
+        If Connex = 1 Then
+            Call conn1()
+        Else
+            Call conn3() 'red
+        End If
         If conexion.State = 1 Then conexion.Close()
         conexion.Open()
 
@@ -794,7 +798,11 @@ Public Class frm_incobrables
                     Dim cmd1 As MySqlCommand = New MySqlCommand
 
                     ' conexion.Close()
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
 
@@ -829,7 +837,11 @@ Public Class frm_incobrables
 
                     Dim cmd2 As MySqlCommand = New MySqlCommand
 
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
 
@@ -863,7 +875,11 @@ Public Class frm_incobrables
 
                     Dim cmd3 As MySqlCommand = New MySqlCommand
 
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
 
@@ -897,7 +913,11 @@ Public Class frm_incobrables
                 Case 4 'Por Rut
                     Dim cmd4 As MySqlCommand = New MySqlCommand
 
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
                     cmd4.Connection = conexion
@@ -927,7 +947,11 @@ Public Class frm_incobrables
                     Dim cmd5 As MySqlCommand = New MySqlCommand
 
                     conexion.Close()
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     'If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
                     cmd5.Connection = conexion
@@ -959,7 +983,11 @@ Public Class frm_incobrables
                     'conecta mysql
                     Dim cmd6 As MySqlCommand = New MySqlCommand
 
-                    Call conn1()
+                    If Connex = 1 Then
+                        Call conn1()
+                    Else
+                        Call conn3() 'red
+                    End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
 
@@ -1448,7 +1476,11 @@ Public Class frm_incobrables
             Dim rs9 As MySqlDataReader
 
             conexion.Close()
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
@@ -1512,7 +1544,11 @@ Public Class frm_incobrables
 
             conexion.Close()
 
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             ' If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
@@ -1574,7 +1610,11 @@ Public Class frm_incobrables
             Dim rs9 As MySqlDataReader
 
             conexion.Close()
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
@@ -1651,7 +1691,11 @@ Public Class frm_incobrables
             Dim cmd12 As MySqlCommand = New MySqlCommand
 
             conexion.Close()
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
             cmd12.Connection = conexion

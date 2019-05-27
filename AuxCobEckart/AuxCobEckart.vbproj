@@ -173,6 +173,12 @@
     <Compile Include="frm_tramos_vcto.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Login.Designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -188,6 +194,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Parametros.Designer.vb">
+      <DependentUpon>Parametros.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Parametros.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Principal.Designer.vb">
       <DependentUpon>Principal.vb</DependentUpon>
@@ -233,11 +245,17 @@
     <EmbeddedResource Include="frm_tramos_vcto.resx">
       <DependentUpon>frm_tramos_vcto.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Parametros.resx">
+      <DependentUpon>Parametros.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.vb</DependentUpon>

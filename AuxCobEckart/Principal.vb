@@ -1,4 +1,7 @@
 ﻿Public Class Principal
+
+
+
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '///////////////////////////////////////
         '///// CONFIGURACION REGIONAL
@@ -46,6 +49,11 @@
 
         'Add all teh controls to the form
         Me.Controls.Add(BarraStatus)
+
+        cbo_conn.Items.Add("Local")
+        cbo_conn.Items.Add("Red")
+
+
 
 
         lbl_version.Text = "VERSIÓN " & System.Windows.Forms.Application.ProductVersion.ToString & " - " & System.Windows.Forms.Application.CompanyName.ToString
@@ -104,5 +112,29 @@
         Me.Hide()
         frm_carga_base.Show()
 
+    End Sub
+
+    Private Sub cmd_parametros_Click(sender As Object, e As EventArgs) Handles cmd_parametros.Click
+        Me.Hide()
+        Parametros.Show()
+
+    End Sub
+
+    Private Sub cbo_conn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_conn.SelectedIndexChanged
+        If cbo_conn.Text = "Local" Then
+            Connex = 1
+        Else
+            Connex = 2
+
+        End If
+    End Sub
+
+    Private Sub cbo_conn_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbo_conn.SelectedValueChanged
+        If cbo_conn.Text = "Local" Then
+            Connex = 1
+        Else
+            Connex = 2
+
+        End If
     End Sub
 End Class

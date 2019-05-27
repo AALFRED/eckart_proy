@@ -322,42 +322,46 @@ Public Class frm_saldos_atrasados
             If var = 1 Then  'busca en mysql
 
                 Dim cmd3 As MySqlCommand = New MySqlCommand
+                If connex = 1 Then
+                    Call conn1()
+                Else
+                    Call conn3 'red
+                End If
 
-                Call conn1()
                 If conexion.State = 1 Then conexion.Close()
-                conexion.Open()
+                    conexion.Open()
 
-                mifecha = msk_fe_ini.Text
-                mifecha2 = msk_fe_fin.Text
-                ' mifecha = mifecha.AddDays(-1) 'resta 1 dia
+                    mifecha = msk_fe_ini.Text
+                    mifecha2 = msk_fe_fin.Text
+                    ' mifecha = mifecha.AddDays(-1) 'resta 1 dia
 
-                cmd3.Connection = conexion
-                cmd3.CommandText = "SELECT Cobr_A, nombre, OrdenarNombre as Vendedor, Salesperson as codven, Sum(BCBalance) as Total  FROM eck_cobranza.datos_fuente where FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "' and BCBalance > 0 group by Cobr_A order by nombre ASC ;"
-                Dim dt3 As System.Data.DataTable = New System.Data.DataTable
-                Dim da3 As MySqlDataAdapter = New MySqlDataAdapter(cmd3)
-                da3.Fill(dt3)
+                    cmd3.Connection = conexion
+                    cmd3.CommandText = "SELECT Cobr_A, nombre, OrdenarNombre as Vendedor, Salesperson as codven, Sum(BCBalance) as Total  FROM eck_cobranza.datos_fuente where FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "' and BCBalance > 0 group by Cobr_A order by nombre ASC ;"
+                    Dim dt3 As System.Data.DataTable = New System.Data.DataTable
+                    Dim da3 As MySqlDataAdapter = New MySqlDataAdapter(cmd3)
+                    da3.Fill(dt3)
 
-                grilla.DataSource = dt3
+                    grilla.DataSource = dt3
 
-                conexion.Close()
-                da3.Dispose()
-                cmd3.Dispose()
+                    conexion.Close()
+                    da3.Dispose()
+                    cmd3.Dispose()
 
-                For i As Integer = 0 To grilla.Rows.Count() - 1 Step +1
+                    For i As Integer = 0 To grilla.Rows.Count() - 1 Step +1
 
-                    i = +i
-                    lbl_reg.Text = i
+                        i = +i
+                        lbl_reg.Text = i
 
-                Next
+                    Next
 
-                Call formato_grilla()
-                Call SUMA_TOT(grilla)
-                cmd_exp_excel.Enabled = True
+                    Call formato_grilla()
+                    Call SUMA_TOT(grilla)
+                    cmd_exp_excel.Enabled = True
 
-            Else
+                Else
 
-                'busca en access
-                mifecha = msk_fe_ini.Text
+                    'busca en access
+                    mifecha = msk_fe_ini.Text
                 mifecha2 = msk_fe_fin.Text
                 ' mifecha = mifecha.AddDays(-1) 'resta 1 dia
 

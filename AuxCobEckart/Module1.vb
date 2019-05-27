@@ -27,6 +27,7 @@ Module Module1
     Dim connString As String
     Public myConnection As OleDbConnection = New OleDbConnection
     Public dr As OleDbDataReader
+    Public Connex As Integer
 
     ':::Procedimiento para conexion a Access
     'Dim Con3 As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source =C:\eckart\proyecto Cobranzas\base\Cobranza.accdb")
@@ -70,7 +71,31 @@ Module Module1
 
     End Sub
 
+    Sub conn3()
+        'conecta con Mysql
+        Dim miserver2 As String = "192.168.1.126"
+        Dim myid2 As String
+        Dim mipass2 As String
+        Dim mipuerto2 As Integer
 
+
+        myid2 = "root"
+        mipass2 = "Xtreme749"
+        mibd = "eck_cobranza"
+        mipuerto2 = "3306"
+        Try
+
+
+            conexion.ConnectionString = "server=" & miserver2 & ";Port=" & mipuerto2 & ";user id=" & myid2 & ";database=" & mibd & ";password=" & mipass2 & "; convert zero datetime=True"
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+
+
+
+    End Sub
 
     ':::Procedimiento para exportar en Access
     Sub Exportar_Access(ByVal Sql As String)

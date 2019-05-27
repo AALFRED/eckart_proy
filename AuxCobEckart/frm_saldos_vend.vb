@@ -421,7 +421,11 @@ Public Class frm_saldos_vend
 
 
             conexion.Close()
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
             cmd5.Connection = conexion
@@ -501,7 +505,11 @@ Public Class frm_saldos_vend
             Dim cmd12 As MySqlCommand = New MySqlCommand
 
             conexion.Close()
-            Call conn1()
+            If Connex = 1 Then
+                Call conn1()
+            Else
+                Call conn3() 'red
+            End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
             cmd12.Connection = conexion

@@ -311,7 +311,11 @@ Public Class frm_cuadro_anual
     Private Sub cmd_buscar_Click(sender As Object, e As EventArgs) Handles cmd_buscar.Click
         Dim cmd6 As MySqlCommand = New MySqlCommand
 
-        Call conn1()
+        If Connex = 1 Then
+            Call conn1()
+        Else
+            Call conn3() 'red
+        End If
         If conexion.State = 1 Then conexion.Close()
         conexion.Open()
 
@@ -392,7 +396,11 @@ Public Class frm_cuadro_anual
         Dim cmd12 As MySqlCommand = New MySqlCommand
         Dim valMes As Integer  'la variable que controla el mes de busqueda
         conexion.Close()
-        Call conn1()
+        If Connex = 1 Then
+            Call conn1()
+        Else
+            Call conn3() 'red
+        End If
         'If conexion.State = 1 Then conexion.Close()
         conexion.Open()
         cmd12.Connection = conexion
