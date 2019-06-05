@@ -114,87 +114,100 @@ Public Class frm_cuadro_anual
     End Sub
 
 
-    Sub Exp_Excel(migrilla2 As DataGridView)
 
-        Try
+    Sub Exp_Excel2(grilla As DataGridView)
 
-
-
-            Dim xlApp As Microsoft.Office.Interop.Excel.Application
-            Dim xlWorkBook As Microsoft.Office.Interop.Excel.Workbook
-            Dim xlWorkSheet As Microsoft.Office.Interop.Excel.Worksheet
-            Dim misValue As Object = System.Reflection.Missing.Value
-            Dim i As Integer
-            Dim j As Integer
-            'Dim contador As Integer
-
-            System.Windows.Forms.Application.DoEvents()
+        System.Windows.Forms.Application.DoEvents()
 
 
-            lbl_cartel.Visible = True
+        lbl_cartel.Visible = True
 
-
-
-            xlApp = New Microsoft.Office.Interop.Excel.Application
-            xlWorkBook = xlApp.Workbooks.Add(misValue)
-            xlWorkSheet = xlWorkBook.Sheets("hoja1")
-
-            'xlWorkSheet.Cells(1, 9) = "Rut Cliente :" & lbl_rut.Text
-            'xlWorkSheet.Cells(2, 9) = "Nombre :" & lbl_nombre.Text
-
-
-            'Original
-            'For i = 0 To DataGridView1.RowCount - 2
-            '    For j = 0 To DataGridView1.ColumnCount - 1
-            '        For k As Integer = 1 To DataGridView1.Columns.Count
-            '            xlWorkSheet.Cells(1, k) = DataGridView1.Columns(k - 1).HeaderText
-            '            xlWorkSheet.Cells(i + 2, j + 1) = DataGridView1(j, i).Value.ToString()
-            '        Next
-            '    Next
-            'Next
-
-
-
-            For i = 0 To grilla.RowCount - 2
-                For j = 0 To grilla.ColumnCount - 1
-                    For k As Integer = 1 To grilla.Columns.Count
-                        xlWorkSheet.Cells(1, k) = grilla.Columns(k - 1).HeaderText
-                        xlWorkSheet.Cells(i + 2, j + 1) = grilla(j, i).Value.ToString()
-                        Cursor.Current = Cursors.WaitCursor
-                    Next
-                    lbl_cartel.Text = "Procesando la Fila....." & i
-                Next
+        If ((grilla.Columns.Count = 0) Or (grilla.Rows.Count = 0)) Then
+            MsgBox("No hay datos para procesar", MsgBoxStyle.Critical, "Sin Datos")
+            'Exit Sub
+        Else
+            'Creando Dataset para Exportar
+            Dim dset As New DataSet
+            'Agregar tabla al Dataset
+            dset.Tables.Add()
+            'AGregar Columna a la tabla
+            For i As Integer = 0 To grilla.ColumnCount - 1
+                dset.Tables(0).Columns.Add(grilla.Columns(i).HeaderText)
             Next
 
-            xlWorkSheet.SaveAs("C:\eckart\proyecto Cobranzas\temp\exp_Cuadro_Anual.xlsx")
-            xlWorkBook.Close()
-            xlApp.Quit()
+            'Agregar filas a la tabla
+            Dim dr1 As DataRow
+            For i As Integer = 0 To grilla.RowCount - 1
+                dr1 = dset.Tables(0).NewRow
+                For j As Integer = 0 To grilla.Columns.Count - 1
+                    dr1(j) = grilla.Rows(i).Cells(j).Value
+                Next
+                dset.Tables(0).Rows.Add(dr1)
+            Next
 
-            releaseObject(xlApp)
-            releaseObject(xlWorkBook)
-            releaseObject(xlWorkSheet)
+            Dim aplicacion As New Microsoft.Office.Interop.Excel.Application
+            Dim wBook As Microsoft.Office.Interop.Excel.Workbook
+            Dim wSheet As Microsoft.Office.Interop.Excel.Worksheet
 
-            MsgBox("Puede Ubicar el archivo en C:\eckart\proyecto Cobranzas\temp\exp_Cuadro_Anual.xlsx")
+            wBook = aplicacion.Workbooks.Add()
+            wSheet = wBook.ActiveSheet()
+
+            Dim dt As System.Data.DataTable = dset.Tables(0)
+            Dim dc As System.Data.DataColumn
+            Dim dr As System.Data.DataRow
+            Dim colIndex As Integer = 0
+            Dim rowIndex As Integer = 0
+
+            For Each dc In dt.Columns
+                colIndex = colIndex + 1
+                aplicacion.Cells(1, colIndex) = dc.ColumnName
+            Next
+            Cursor.Current = Cursors.WaitCursor
+            For Each dr In dt.Rows
+                rowIndex = rowIndex + 1
+                colIndex = 0
+                For Each dc In dt.Columns
+                    colIndex = colIndex + 1
+                    aplicacion.Cells(rowIndex + 1, colIndex) = dr(dc.ColumnName)
+
+                Next
+
+                lbl_cartel.Text = "Procesando la Fila....." & rowIndex
+            Next
+
+            'Configurar la orientacion de la  hoja y el tamaño
+            ' wSheet.PageSetup.Orientation = XlPageOrientation.xlLandscape
+            ' wSheet.PageSetup.PaperSize = XlPaperSize.xlPaperLegal
+            'Configurar con negrilla la cabecera y tenga autofit
+            wSheet.Rows.Item(1).Font.Bold = 1
+            wSheet.Columns.AutoFit()
+
+            'Dim strFileName As String = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory) & "Temp\exp_Cuadro_Anual.xlsx"
+            'Dim strFilename As String = System.IO.Path.GetDirectoryName(path:="Temp\exp_Cuadro_Anual.xlsx")
+            Dim strfilename As String = "C:\eckart\proyecto Cobranzas\Temp\exp_Cuadro_Anual.xlsx"
+            Dim blnFileOpen As Boolean = False
+            Try
+                Dim fileTemp As System.IO.FileStream = System.IO.File.OpenWrite(strFileName)
+                fileTemp.Close()
+            Catch ex As Exception
+                blnFileOpen = False
+            End Try
+
+            If System.IO.File.Exists(strFileName) Then
+                System.IO.File.Delete(strFileName)
+            End If
+            MessageBox.Show("El documento fue exportado correctamente.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1)
+            wBook.SaveAs(strFileName)
+            aplicacion.Workbooks.Open(strFileName)
+            aplicacion.Visible = True
             Cursor.Current = Cursors.Default
-            lbl_cartel.Visible = False
+
+        End If
 
 
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Proceso Exp_Excel")
-        End Try
     End Sub
 
-    Private Sub releaseObject(ByVal obj As Object)
-        Try
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
-            obj = Nothing
-        Catch ex As Exception
-            obj = Nothing
-        Finally
-            GC.Collect()
-        End Try
-    End Sub
+
 
 
     Sub SUMA_TOT(migrilla3 As DataGridView)
@@ -312,10 +325,11 @@ Public Class frm_cuadro_anual
         Dim cmd6 As MySqlCommand = New MySqlCommand
 
         If Connex = 1 Then
-            Call conn1()
+            Call Conectar()
         Else
             Call conn3() 'red
         End If
+
         If conexion.State = 1 Then conexion.Close()
         conexion.Open()
 
@@ -383,7 +397,7 @@ Public Class frm_cuadro_anual
     End Sub
 
     Private Sub cmd_exp_excel_Click(sender As Object, e As EventArgs) Handles cmd_exp_excel.Click
-        Call Exp_Excel(grilla)
+        Call Exp_Excel2(grilla)
     End Sub
 
     Private Sub grilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grilla.CellContentClick
