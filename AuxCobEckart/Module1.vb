@@ -13,15 +13,18 @@ Imports System.Runtime.InteropServices
 ':::Libreria OleDb - Access
 Imports System.Data.OleDb
 Imports Microsoft.Office.Interop.Excel
-
-
-
+Imports System.Data
+Imports System.Data.Odbc
+Imports AuxCobEckart
+Imports System.Globalization
+Imports DataTable = System.Data.DataTable
 
 Module Module1
     Public conexion As New MySqlConnection
     Public mibd As String
     Public miano As Integer
     Public perfil As Integer = 0
+
 
     'para access
     Dim provider As String
@@ -74,13 +77,13 @@ Module Module1
         mipass2 = "Xtreme749"
         mibd = "eck_cobranza"
         mipuerto2 = "3306"
-        Try
+        ' Try
+        If conexion.State = 1 Then conexion.Close()
+        conexion.ConnectionString = "server=" & miserver2 & ";Port=" & mipuerto2 & ";user id=" & myid2 & ";database=" & mibd & ";password=" & mipass2 & "; convert zero datetime=True"
 
-            conexion.ConnectionString = "server=" & miserver2 & ";Port=" & mipuerto2 & ";user id=" & myid2 & ";database=" & mibd & ";password=" & mipass2 & "; convert zero datetime=True"
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
+        'End Try
 
 
     End Sub
@@ -201,9 +204,11 @@ Module Module1
 
     End Sub
 
+
     Sub conn3()
         'conecta con Mysql
-        Dim miserver As String = "192.168.1.126"
+        ' Dim miserver As String = "192.168.1.126"
+        Dim miserver As String = "127.0.0.1"
         Dim myid2 As String
         Dim mipass2 As String
         Dim mipuerto2 As Integer
@@ -214,7 +219,7 @@ Module Module1
         mibd = "eck_cobranza"
         mipuerto2 = "3306"
         ' Try
-
+        If conexion.State = 1 Then conexion.Close()
 
         conexion.ConnectionString = "server=" & miserver & ";Port=" & mipuerto2 & ";user id=" & myid2 & ";database=" & mibd & ";password=" & mipass2 & "; convert zero datetime=True"
 

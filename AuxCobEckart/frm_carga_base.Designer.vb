@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frm_carga_base
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,8 +20,9 @@ Partial Class frm_carga_base
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_carga_base))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmd_instrucciones = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -106,16 +107,17 @@ Partial Class frm_carga_base
         '
         'cmd_cargar_access
         '
-        Me.cmd_cargar_access.Location = New System.Drawing.Point(396, 48)
+        Me.cmd_cargar_access.Location = New System.Drawing.Point(230, 57)
         Me.cmd_cargar_access.Name = "cmd_cargar_access"
         Me.cmd_cargar_access.Size = New System.Drawing.Size(104, 23)
         Me.cmd_cargar_access.TabIndex = 2
         Me.cmd_cargar_access.Text = "Cargar Access"
         Me.cmd_cargar_access.UseVisualStyleBackColor = True
+        Me.cmd_cargar_access.Visible = False
         '
         'cmd_cargar_mysql
         '
-        Me.cmd_cargar_mysql.Location = New System.Drawing.Point(396, 19)
+        Me.cmd_cargar_mysql.Location = New System.Drawing.Point(395, 33)
         Me.cmd_cargar_mysql.Name = "cmd_cargar_mysql"
         Me.cmd_cargar_mysql.Size = New System.Drawing.Size(104, 23)
         Me.cmd_cargar_mysql.TabIndex = 1
@@ -200,9 +202,11 @@ Partial Class frm_carga_base
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.ClientSize = New System.Drawing.Size(1057, 490)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "frm_carga_base"
         Me.Text = "frm_carga_base"

@@ -70,6 +70,8 @@ Public Class frm_cliente
 
         If var = 1 Then 'buscar por mysql
             Dim cmd1 As New MySqlCommand
+            Call conn1()
+
             If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
@@ -162,25 +164,27 @@ Public Class frm_cliente
         Me.Controls.Add(BarraStatus)
 
 
+
         cmd_cargar_mysql.Enabled = False
-        cmd_cargar_access.Enabled = False
-        cmd_seleccionar.Enabled = False
-        cmd_truncate_bd.Enabled = False
+            cmd_cargar_access.Enabled = False
+            cmd_seleccionar.Enabled = False
+            cmd_truncate_bd.Enabled = False
 
-        lbl_nroreg.Text = ""
-        'carga de tipo de bd
-        cbo_tpo.Items.Add("BD MYSQL")
-        cbo_tpo.Items.Add("BD ACCESS")
+            lbl_nroreg.Text = ""
+            'carga de tipo de bd
+            cbo_tpo.Items.Add("BD MYSQL")
+            cbo_tpo.Items.Add("BD ACCESS")
 
 
-        lbl_nomclie.Text = ""
-        lbl_cod_vend.Text = ""
-        lbl_vend_actual.Text = ""
-        cbo_vend.Enabled = False
-        txt_rutclie.Enabled = False
-        cmd_asigna_vend.Enabled = False
-        cmd_quitar_vend.Enabled = False
-        lbl_nroreg2.Text = ""
+            lbl_nomclie.Text = ""
+            lbl_cod_vend.Text = ""
+            lbl_vend_actual.Text = ""
+            cbo_vend.Enabled = False
+            txt_rutclie.Enabled = False
+            cmd_asigna_vend.Enabled = False
+            cmd_quitar_vend.Enabled = False
+            lbl_nroreg2.Text = ""
+
 
 
     End Sub
@@ -385,74 +389,74 @@ Public Class frm_cliente
         Dim nom_relaciom As String
 
 
-        'Try
-        System.Windows.Forms.Application.DoEvents()
-        Call conn1()
+        Try
+            System.Windows.Forms.Application.DoEvents()
+            Call conn1()
 
-        If conexion.State = 1 Then conexion.Close()
-        conexion.Open()
+            If conexion.State = 1 Then conexion.Close()
+            conexion.Open()
 
-        Cursor.Current = Cursors.WaitCursor
-        Me.grilla.Invalidate()
-        Me.grilla.Visible = False
+            Cursor.Current = Cursors.WaitCursor
+            Me.grilla.Invalidate()
+            Me.grilla.Visible = False
 
-        With grilla
+            With grilla
 
-            For i = 0 To .Rows.Count - 1
-
-
-                rut = .Rows(i).Cells(0).Value.ToString() 'rut
-                nombreClie = .Rows(i).Cells(1).Value.ToString() 'nom-clie
-                cobrar = .Rows(i).Cells(2).Value.ToString() 'cobrar
-                pais = .Rows(i).Cells(3).Value.ToString() 'date field
-                moneda = .Rows(i).Cells(4).Value.ToString() 'ldiario
-                idioma = .Rows(i).Cells(5).Value.ToString() 'descripcion
-                region = .Rows(i).Cells(6).Value.ToString() 'tipo clie
-                tipo = .Rows(i).Cells(7).Value.ToString() 'tipo clie
-                planta = .Rows(i).Cells(8).Value.ToString() 'nombre cliente
-                vendedor = .Rows(i).Cells(9).Value.ToString() 'tipo seg nom
-                observa = .Rows(i).Cells(10).Value.ToString() 'tipo abto
-                zona_horaria1 = .Rows(i).Cells(11).Value.ToString() 'tipo gravable
-                datos_completos = .Rows(i).Cells(12).Value.ToString() 'tipo fact
-                activo = .Rows(i).Cells(13).Value.ToString() 'vocuher
-                dscto = .Rows(i).Cells(14).Value.ToString() 'nro doctp
-                precio_fijo = .Rows(i).Cells(15).Value.ToString() 'nro fact corto
-                clase = .Rows(i).Cells(16).Value.ToString() 'docto relacionado
-                sic = .Rows(i).Cells(17).Value.ToString() 'mto docto
-                porc_dscto = .Rows(i).Cells(18).Value.ToString() 'abonos
-                terminos = .Rows(i).Cells(19).Value.ToString() 'con seguro
-                lista_flete = .Rows(i).Cells(20).Value.ToString() 'zonal cobro
-                min_ps_fit = .Rows(i).Cells(21).Value.ToString() 'mto seguro
-                termino_flete = .Rows(i).Cells(22).Value.ToString() 'bc balance
-                tipo_transf = .Rows(i).Cells(23).Value.ToString()
-                via_embarque = .Rows(i).Cells(24).Value.ToString() 'cuenta
-                ciudad = .Rows(i).Cells(25).Value.ToString() 'descrip cuenta
-                estado = .Rows(i).Cells(26).Value.ToString() 'descrip cuenta
-                cod_postal = .Rows(i).Cells(27).Value.ToString() 'descrip cuenta
-                cod_relac_emp = .Rows(i).Cells(28).Value.ToString() 'descrip cuenta
-                nom_relaciom = .Rows(i).Cells(29).Value.ToString() 'descrip cuenta
+                For i = 0 To .Rows.Count - 1
 
 
-                cmd = New MySqlCommand("Insert Into cliente (id, Clie, Ordenar_nombre, Cobrar_A, Pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion)" &
+                    rut = .Rows(i).Cells(0).Value.ToString() 'rut
+                    nombreClie = .Rows(i).Cells(1).Value.ToString() 'nom-clie
+                    cobrar = .Rows(i).Cells(2).Value.ToString() 'cobrar
+                    pais = .Rows(i).Cells(3).Value.ToString() 'date field
+                    moneda = .Rows(i).Cells(4).Value.ToString() 'ldiario
+                    idioma = .Rows(i).Cells(5).Value.ToString() 'descripcion
+                    region = .Rows(i).Cells(6).Value.ToString() 'tipo clie
+                    tipo = .Rows(i).Cells(7).Value.ToString() 'tipo clie
+                    planta = .Rows(i).Cells(8).Value.ToString() 'nombre cliente
+                    vendedor = .Rows(i).Cells(9).Value.ToString() 'tipo seg nom
+                    observa = .Rows(i).Cells(10).Value.ToString() 'tipo abto
+                    zona_horaria1 = .Rows(i).Cells(11).Value.ToString() 'tipo gravable
+                    datos_completos = .Rows(i).Cells(12).Value.ToString() 'tipo fact
+                    activo = .Rows(i).Cells(13).Value.ToString() 'vocuher
+                    dscto = .Rows(i).Cells(14).Value.ToString() 'nro doctp
+                    precio_fijo = .Rows(i).Cells(15).Value.ToString() 'nro fact corto
+                    clase = .Rows(i).Cells(16).Value.ToString() 'docto relacionado
+                    sic = .Rows(i).Cells(17).Value.ToString() 'mto docto
+                    porc_dscto = .Rows(i).Cells(18).Value.ToString() 'abonos
+                    terminos = .Rows(i).Cells(19).Value.ToString() 'con seguro
+                    lista_flete = .Rows(i).Cells(20).Value.ToString() 'zonal cobro
+                    min_ps_fit = .Rows(i).Cells(21).Value.ToString() 'mto seguro
+                    termino_flete = .Rows(i).Cells(22).Value.ToString() 'bc balance
+                    tipo_transf = .Rows(i).Cells(23).Value.ToString()
+                    via_embarque = .Rows(i).Cells(24).Value.ToString() 'cuenta
+                    ciudad = .Rows(i).Cells(25).Value.ToString() 'descrip cuenta
+                    estado = .Rows(i).Cells(26).Value.ToString() 'descrip cuenta
+                    cod_postal = .Rows(i).Cells(27).Value.ToString() 'descrip cuenta
+                    cod_relac_emp = .Rows(i).Cells(28).Value.ToString() 'descrip cuenta
+                    nom_relaciom = .Rows(i).Cells(29).Value.ToString() 'descrip cuenta
+
+
+                    cmd = New MySqlCommand("Insert Into cliente (id, Clie, Ordenar_nombre, Cobrar_A, Pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion)" &
        " Values (0, '" & rut & "', '" & nombreClie & "', '" & cobrar & "', '" & pais & "', '" & moneda & "', '" & idioma & "', '" & region & "', '" & tipo & "', '" & planta & "', '" & vendedor & "', '" & observa & "', " &
        " '" & zona_horaria1 & "', '" & datos_completos & "', '" & activo & "', '" & dscto & "', '" & precio_fijo & "', '" & clase & "', '" & sic & "', '" & porc_dscto & "', '" & terminos & "', '" & lista_flete & "', '" & min_ps_fit & "', '" & termino_flete & "', '" & tipo_transf & "', '" & via_embarque & "', '" & ciudad & "', '" & estado & "', '" & cod_postal & "', '" & cod_relac_emp & "', '" & nom_relaciom & "')", conexion)
-                cmd.ExecuteNonQuery()
-                Me.Refresh()
+                    cmd.ExecuteNonQuery()
+                    Me.Refresh()
 
-            Next
+                Next
 
 
 
-        End With
+            End With
 
-        conexion.Close()
-        MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
-        Cursor.Current = Cursors.Default
+            conexion.Close()
+            MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
+            Cursor.Current = Cursors.Default
 
-        'Catch ex As Exception
-        '    MessageBox.Show(ex.Message)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
 
-        'End Try
+        End Try
 
 
 
@@ -493,49 +497,56 @@ Public Class frm_cliente
     Private Sub txt_rutclie_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_rutclie.KeyPress
         Dim cmd1 As MySqlCommand = New MySqlCommand
 
-        If e.KeyChar = Convert.ToChar(13) Then
+        Try
 
-            If txt_rutclie.Text <> "" Then
+            If e.KeyChar = Convert.ToChar(13) Then
 
-                If var = 1 Then
+                If txt_rutclie.Text <> "" Then
+
+                    If var = 1 Then
 
 
-                    Call conn1()
-                    cmd1.Connection = conexion
-                    'cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM eck_cobranza.datos_fuente  where salesperson = '" & txt_rut.Text & "' group by Cobr_A order by nombre ASC "
-                    cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM datos_fuente  where Cobr_A = '" & txt_rutclie.Text & "' group by Salesperson order by Ordenarnombre ASC"
-                    Dim dt1 As System.Data.DataTable = New System.Data.DataTable
-                    Dim da2 As MySqlDataAdapter = New MySqlDataAdapter(cmd1)
-                    da2.Fill(dt1)
+                        Call conn1()
+                        cmd1.Connection = conexion
+                        'cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM eck_cobranza.datos_fuente  where salesperson = '" & txt_rut.Text & "' group by Cobr_A order by nombre ASC "
+                        cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM datos_fuente  where Cobr_A = '" & txt_rutclie.Text & "' group by Salesperson order by Ordenarnombre ASC"
+                        Dim dt1 As System.Data.DataTable = New System.Data.DataTable
+                        Dim da2 As MySqlDataAdapter = New MySqlDataAdapter(cmd1)
+                        da2.Fill(dt1)
 
-                    grilla2.DataSource = dt1
+                        grilla2.DataSource = dt1
 
-                    conexion.Close()
-                    da2.Dispose()
-                    cmd1.Dispose()
+                        conexion.Close()
+                        da2.Dispose()
+                        cmd1.Dispose()
 
-                    For i As Integer = 0 To grilla2.Rows.Count() Step +1
+                        For i As Integer = 0 To grilla2.Rows.Count() Step +1
 
-                        i = +i
-                        lbl_nroreg2.Text = i
+                            i = +i
+                            lbl_nroreg2.Text = i
 
-                    Next
-                    Call formato_grilla()
+                        Next
+                        Call formato_grilla()
 
+                    Else
+
+
+
+
+                    End If
                 Else
 
-
-
+                    txt_rutclie.Select()
 
                 End If
-            Else
 
-                txt_rutclie.Select()
 
             End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
 
+        End Try
 
-        End If
     End Sub
 
     Private Sub cbo_tpo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbo_tpo.SelectedValueChanged

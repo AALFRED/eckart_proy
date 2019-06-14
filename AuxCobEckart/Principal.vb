@@ -21,30 +21,39 @@ Public Class Principal
     Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 
 
-
-
     Sub Ultima_Carga_datos()
-        If Connex = 1 Then
-            Call Conectar()
-        Else
-            Call conn3()
-        End If
-        If conexion.State = 1 Then conexion.Close()
-        conexion.Open()
 
-        sql = "SELECT MAX(id), fecha FROM ultima_carga"
-        com = New MySqlCommand(sql, conexion)
-        rs = com.ExecuteReader()
-        If rs.HasRows() Then
-            rs.Read()
+        Try
 
-            lbl_carga_datos.Text = rs.GetString(1)
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
 
-        Else
-            lbl_carga_datos.Text = "No definido"
-            'MessageBox.Show("No Existen accesos Registrados", "Validacion de Acceso")
+            Else
+                'MODO RED
+                Call Conectar()
+            End If
+            If conexion.State = 1 Then conexion.Close()
+            conexion.Open()
 
-        End If
+            sql = "SELECT id, MAX(fecha) FROM ultima_carga"
+            com = New MySqlCommand(sql, conexion)
+            rs = com.ExecuteReader()
+            If rs.HasRows() Then
+                rs.Read()
+
+                lbl_carga_datos.Text = rs.GetString(1)
+
+            Else
+                lbl_carga_datos.Text = "No definido"
+                'MessageBox.Show("No Existen accesos Registrados", "Validacion de Acceso")
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+
+        End Try
     End Sub
 
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -63,26 +72,29 @@ Public Class Principal
 
         '//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Connex = 1
+        Try
 
-        Me.CenterToScreen()
+            Me.CenterToScreen()
 
-        Me.Text = "ECKART / AUXILIAR DE COBRANZA - MENÚ PRINCIPAL"
-        Call Ultima_Carga_datos()
-
-
-
-        ' lbl_version.Text = "VERSIÓN " & System.Windows.Forms.Application.ProductVersion.ToString & " - " & System.Windows.Forms.Application.CompanyName.ToString
-
-        lbl_version.Text = "VERSIÓN " & Application.ProductVersion.ToString & " - " & Application.CompanyName.ToString
-
-        Tool1.Text = " // Cobranza Aux.- " & DateTime.Now.ToString((" dd-MM-yyyy")) '& DateTime.Now
-        Tool2.Text = "// Ip del Servidor " & miserver.ToString
-        Tool3.Text = "// Base de Datos: " & mibd.ToString
-        Tool4.Text = "// TIPO SERVIDOR: " & tipobase.ToString
+            Me.Text = "ECKART / AUXILIAR DE COBRANZA - MENÚ PRINCIPAL"
+            Call Ultima_Carga_datos()
 
 
 
+            ' lbl_version.Text = "VERSIÓN " & System.Windows.Forms.Application.ProductVersion.ToString & " - " & System.Windows.Forms.Application.CompanyName.ToString
+
+            lbl_version.Text = "VERSIÓN " & Application.ProductVersion.ToString & " - " & Application.CompanyName.ToString
+
+            Tool1.Text = " // Cobranza Aux.- " & DateTime.Now.ToString((" dd-MM-yyyy")) '& DateTime.Now
+            Tool2.Text = "// Ip del Servidor " & miserver.ToString
+            Tool3.Text = "// Base de Datos: " & mibd.ToString
+            Tool4.Text = "// TIPO SERVIDOR: " & tipobase.ToString
+
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+
+        End Try
 
     End Sub
 
@@ -138,20 +150,39 @@ Public Class Principal
     End Sub
 
     Private Sub cmd_clientes_Click(sender As Object, e As EventArgs) Handles cmd_clientes.Click
-        Me.Hide()
+        If Connex = 1 Then
+            MsgBox("Este Módulo sólo funciona en entorno local de administración", MsgBoxStyle.Critical)
+            Me.Show()
+
+        Else
+
+            Me.Hide()
         frm_cliente.Show()
+        End If
 
     End Sub
 
     Private Sub cmd_carga_base_Click(sender As Object, e As EventArgs) Handles cmd_carga_base.Click
-        Me.Hide()
-        frm_carga_base.Show()
+        If Connex = 1 Then
+            MsgBox("Este Módulo sólo funciona en entorno local de administración", MsgBoxStyle.Critical)
+            Me.Show()
+
+        Else
+            Me.Hide()
+            frm_carga_base.Show()
+        End If
 
     End Sub
 
     Private Sub cmd_parametros_Click(sender As Object, e As EventArgs) Handles cmd_parametros.Click
-        Me.Hide()
-        Parametros.Show()
+        If Connex = 1 Then
+            MsgBox("Este Módulo sólo funciona en entorno local de administración", MsgBoxStyle.Critical)
+            Me.Show()
+
+        Else
+            Me.Hide()
+            Parametros.Show()
+        End If
 
     End Sub
 

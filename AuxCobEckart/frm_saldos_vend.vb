@@ -414,19 +414,20 @@ Public Class frm_saldos_vend
 
             Dim cmd5 As MySqlCommand = New MySqlCommand
 
-
-
             mifecha = msk_fe_ini.Text
             mifecha2 = msk_fe_fin.Text
 
 
-            conexion.Close()
-            If Connex = 1 Then
-                Call conn1()
+            If conexion.State = 1 Then conexion.Close()
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
+
             Else
-                Call conn3() 'red
+                'MODO RED
+                Call Conectar()
             End If
-            'If conexion.State = 1 Then conexion.Close()
+            '
             conexion.Open()
             cmd5.Connection = conexion
             'where cuenta = '1114001'
@@ -504,13 +505,16 @@ Public Class frm_saldos_vend
 
             Dim cmd12 As MySqlCommand = New MySqlCommand
 
-            conexion.Close()
-            If Connex = 1 Then
-                Call conn1()
+            If conexion.State = 1 Then conexion.Close()
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
+
             Else
-                Call conn3() 'red
+                'MODO RED
+                Call Conectar()
             End If
-            'If conexion.State = 1 Then conexion.Close()
+
             conexion.Open()
             cmd12.Connection = conexion
 

@@ -177,7 +177,12 @@ Public Class frm_carga_vend
             Dim ret_var8 As String
             Dim cmd7 As New MySqlCommand
 
-            Call conn1()
+            If Connex = 1 Then
+                Call Conectar()
+            Else
+                Call conn1()
+            End If
+
             If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 

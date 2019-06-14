@@ -45,8 +45,15 @@ Public Class frm_Acceso
         Dim mifecha As String
         mifecha = System.DateTime.Now.ToString((" yyyy-MM-dd HH:mm:ss"))
 
-        Try
+        'Try
+        If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
 
+            Else
+                'MODO RED
+                Call Conectar()
+            End If
 
             If conexion.State = 1 Then conexion.Close()
             conexion.Open()
@@ -64,10 +71,10 @@ Public Class frm_Acceso
             cmd.Dispose()
             conexion.Close()
 
-        Catch ex As Exception
-            MsgBox(ex.Message)
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
 
-        End Try
+        'End Try
     End Sub
 
 
@@ -76,14 +83,15 @@ Public Class frm_Acceso
         'Try
 
         If Connex = 0 Then
-                'MODO LOCAL
-                Call Conectar()
-            Else
-                'MODO RED
-                Call conn1()
+            'MODO LOCAL
+            Call conn3()
 
-            End If
-            If conexion.State = 1 Then conexion.Close()
+        Else
+            'MODO RED
+            Call Conectar()
+        End If
+
+        If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
             sSql = "Select * From usuarios where usuario= '" & txt_user.Text & "' and pass= '" & txt_pass.Text & "'"
@@ -120,11 +128,13 @@ Public Class frm_Acceso
         cbo_tipo_conn.Items.Add("RED")
         cbo_tipo_conn.Text = "RED"
 
-        If cbo_tipo_conn.Text = "LOCAL" Then
-
-            Call Conectar()
-        Else
+        If Connex = 0 Then
+            'MODO LOCAL
             Call conn3()
+
+        Else
+            'MODO RED
+            Call Conectar()
         End If
 
 
@@ -191,10 +201,11 @@ Public Class frm_Acceso
 
             If Connex = 0 Then
                 'MODO LOCAL
-                Call Conectar()
+                Call conn3()
+
             Else
                 'MODO RED
-                Call conn3()
+                Call Conectar()
             End If
 
             If conexion.State = 1 Then conexion.Close()
@@ -262,21 +273,26 @@ Public Class frm_Acceso
     End Sub
 
     Private Sub cbo_tipo_conn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_tipo_conn.SelectedIndexChanged
+
+
         If cbo_tipo_conn.Text = "LOCAL" Then
             Connex = 0
         Else
-            Connex = 1
+            Connex = 1   'red
 
         End If
+        txt_user.Select()
+
     End Sub
 
     Private Sub cbo_tipo_conn_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbo_tipo_conn.SelectedValueChanged
         If cbo_tipo_conn.Text = "LOCAL" Then
             Connex = 0
         Else
-            Connex = 1
+            Connex = 1   'red
 
         End If
+        txt_user.Select()
     End Sub
 
     Private Sub txt_pass_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_pass.KeyPress
@@ -286,65 +302,65 @@ Public Class frm_Acceso
         Dim bandera As Boolean
 
 
-        ' Try
-        If e.KeyChar = Convert.ToChar(13) Then
+        Try
+            If e.KeyChar = Convert.ToChar(13) Then
 
 
-            If sw = False Then
-                Exit Sub
-            Else
+                If sw = False Then
+                    Exit Sub
+                Else
 
-                If txt_pass.Text <> "" Then
+                    If txt_pass.Text <> "" Then
 
-                    If Connex = 0 Then
-                        'MODO LOCAL
-                        Call Conectar()
-                    Else
-                        'MODO RED
-                        Call conn3()
-                    End If
+                        If Connex = 0 Then
+                            'MODO LOCAL
+                            Call conn3()
 
-                    If conexion.State = 1 Then conexion.Close()
-                    conexion.Open()
+                        Else
+                            'MODO RED
+                            Call Conectar()
+                        End If
 
-                    cmd2.CommandText = ("SELECT * FROM usuarios where usuario= '" & txt_user.Text & "' and pass = '" & txt_pass.Text & "'")
-                    cmd2.Connection = conexion
-                    cmd2.CommandType = CommandType.Text
-                    dr3 = cmd2.ExecuteReader
+                        If conexion.State = 1 Then conexion.Close()
+                        conexion.Open()
 
-                    If dr3.Read = False Then
-                        'cmd2.ExecuteNonQuery()
-                        MessageBox.Show("La Clave o el Usuario no son válidos", "Validación de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        cmd2.CommandText = ("SELECT * FROM usuarios where usuario= '" & txt_user.Text & "' and pass = '" & txt_pass.Text & "'")
+                        cmd2.Connection = conexion
+                        cmd2.CommandType = CommandType.Text
+                        dr3 = cmd2.ExecuteReader
+
+                        If dr3.Read = False Then
+                            'cmd2.ExecuteNonQuery()
+                            MessageBox.Show("La Clave o el Usuario no son válidos", "Validación de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            conexion.Close()
+
+                            bandera = True
+                            txt_pass.Select()
+                        Else
+                            bandera = False
+
+                            cmd_ingreso.Enabled = True
+                            cmd_ingreso.Select()
+                        End If
+
+
+                        dr3.Dispose()
                         conexion.Close()
-
-                        bandera = True
-                        txt_pass.Select()
-                    Else
-                        bandera = False
-
                         cmd_ingreso.Enabled = True
                         cmd_ingreso.Select()
+
                     End If
-
-
-                    dr3.Dispose()
-                    conexion.Close()
-                    cmd_ingreso.Enabled = True
-                    cmd_ingreso.Select()
-
                 End If
             End If
 
 
 
+        Catch ex As Exception
+            MsgBox(ex.Message)
 
-            'Catch ex As Exception
-            '    MsgBox(ex.Message)
-
-            'End Try
+        End Try
 
 
-        End If
     End Sub
 
     Private Sub cmd_ingreso_Click(sender As Object, e As EventArgs) Handles cmd_ingreso.Click
@@ -354,17 +370,37 @@ Public Class frm_Acceso
 
             registra_entrada(bandera)
 
-            If perfil = 1 Then
 
-                Principal.cmd_carga_base.Enabled = True
-                Principal.cmd_parametros.Enabled = True
-                Principal.cmd_clientes.Enabled = True
-            Else
-                Principal.cmd_carga_base.Enabled = False
-                Principal.cmd_parametros.Enabled = False
-                Principal.cmd_clientes.Enabled = False
-            End If
 
+
+            Select Case perfil
+                Case 1 'administrador 
+                    Principal.cmd_carga_base.Enabled = True
+                    Principal.cmd_parametros.Enabled = True
+                    Principal.cmd_clientes.Enabled = True
+
+                Case 2
+                    Principal.cmd_carga_base.Enabled = False
+                    Principal.cmd_parametros.Enabled = False
+                    Principal.cmd_clientes.Enabled = False
+                Case 3
+                    Principal.cmd_carga_base.Enabled = False
+                    Principal.cmd_parametros.Enabled = False
+                    Principal.cmd_clientes.Enabled = False
+                Case 4
+                    Principal.cmd_carga_base.Enabled = False
+                    Principal.cmd_parametros.Enabled = False
+                    Principal.cmd_clientes.Enabled = False
+                Case 5
+                    Principal.cmd_carga_base.Enabled = False
+                    Principal.cmd_parametros.Enabled = False
+                    Principal.cmd_clientes.Enabled = False
+                Case 6
+                    Principal.cmd_carga_base.Enabled = False
+                    Principal.cmd_parametros.Enabled = False
+                    Principal.cmd_clientes.Enabled = False
+
+            End Select
 
 
             Principal.Show()

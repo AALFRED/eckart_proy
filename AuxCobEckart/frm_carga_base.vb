@@ -16,6 +16,11 @@ Imports MySql.Data
 Imports MySql.Data.MySqlClient
 
 
+Imports AuxCobEckart
+Imports Microsoft.Office.Interop.Excel
+Imports System.Globalization
+
+
 Public Class frm_carga_base
 
     Dim var As Integer
@@ -70,21 +75,27 @@ Public Class frm_carga_base
         'Add all teh controls to the form
         Me.Controls.Add(BarraStatus)
 
+
+
+
         lbl_traspaso.Text = ""
-        lbl_nroreg.Text = ""
-        lbl_traspaso.Visible = False
-        lbl_cartel.Visible = False
-        cmd_truncate_bd.Enabled = False
+            lbl_nroreg.Text = ""
+            lbl_traspaso.Visible = False
+            lbl_cartel.Visible = False
+            cmd_truncate_bd.Enabled = False
 
-        cmd_cargar_datos.Enabled = False
-        cmd_cargar_mysql.Enabled = False
-        cmd_cargar_access.Enabled = False
+            cmd_cargar_datos.Enabled = False
+            cmd_cargar_mysql.Enabled = False
+            cmd_cargar_access.Enabled = False
 
-        cmd_truncate_bd.Enabled = False
+            cmd_truncate_bd.Enabled = False
 
-        'carga de tipo de bd
-        cbo_tpo.Items.Add("BD MYSQL")
-        cbo_tpo.Items.Add("BD ACCESS")
+            'carga de tipo de bd
+            cbo_tpo.Items.Add("BD MYSQL")
+            cbo_tpo.Items.Add("BD ACCESS")
+
+
+
     End Sub
 
     Private Sub frm_carga_base_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
@@ -103,7 +114,8 @@ Public Class frm_carga_base
             If .ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 ' ImportExcellToDataGridView(.FileName, grilla)
 
-                Dim dt As DataTable = GetDataExcel(.FileName, "Datos")
+                Dim dt As System.Data.DataTable = GetDataExcel(.FileName, "Datos")
+
                 grilla.DataSource = dt
                 System.Windows.Forms.Application.DoEvents()
                 Cursor.Current = Cursors.WaitCursor
@@ -130,7 +142,7 @@ Public Class frm_carga_base
 
     Private Sub cmd_cargar_Click(sender As Object, e As EventArgs) Handles cmd_cargar_mysql.Click
         Dim cmd As MySqlCommand = New MySqlCommand
-
+        Dim cmd2 As MySqlCommand = New MySqlCommand
 
 
         Dim ret_cobro As String
@@ -163,110 +175,121 @@ Public Class frm_carga_base
         Dim ret_cuenta As String
         Dim ret_descrip_cta As String
 
-        'Try
-        System.Windows.Forms.Application.DoEvents()
+        Try
+            System.Windows.Forms.Application.DoEvents()
 
-        lbl_traspaso.Visible = True
+            lbl_traspaso.Visible = True
 
-        'MsgBox("...Cargando Datos a la Base", MsgBoxStyle.Information)
+            'MsgBox("...Cargando Datos a la Base", MsgBoxStyle.Information)
 
-        ' MsgBox("conexion establecida--")
-        Call conn1()
-        If conexion.State = 1 Then conexion.Close()
-        conexion.Open()
+            ' MsgBox("conexion establecida--")
+            Call conn1()
+            If conexion.State = 1 Then conexion.Close()
+            conexion.Open()
 
-        Cursor.Current = Cursors.WaitCursor
-        Me.grilla.Invalidate()
-        Me.grilla.Visible = False
+            Cursor.Current = Cursors.WaitCursor
+            Me.grilla.Invalidate()
+            Me.grilla.Visible = False
 
-        With grilla
+            With grilla
 
-            For i = 0 To .Rows.Count - 1
+                For i = 0 To .Rows.Count - 1
 
-                lbl_traspaso.Text = "Traspasando " & i & "  de " & lbl_nroreg.Text
-                lbl_cartel.Visible = True
+                    lbl_traspaso.Text = "Traspasando " & i & "  de " & lbl_nroreg.Text
+                    lbl_cartel.Visible = True
 
-                ret_cobro = .Rows(i).Cells(0).Value.ToString() 'cobro
-                ret_vend = .Rows(i).Cells(1).Value.ToString() 'vend
-                ret_nomven = .Rows(i).Cells(2).Value.ToString() 'nomvend
-                ret_datefield = .Rows(i).Cells(3).Value.ToString() 'date field
-                ret_ldiario = .Rows(i).Cells(4).Value.ToString() 'ldiario
-                ret_descrip = .Rows(i).Cells(5).Value.ToString() 'descripcion
-                ret_tipoClie = .Rows(i).Cells(6).Value.ToString() 'tipo clie
-                ret_descrip2 = .Rows(i).Cells(7).Value.ToString() 'tipo clie
-                ret_nomclie = .Rows(i).Cells(8).Value.ToString() 'nombre cliente
-                ret_seg_nom = .Rows(i).Cells(9).Value.ToString() 'tipo seg nom
-                ret_abto = .Rows(i).Cells(10).Value.ToString() 'tipo abto
-                ret_gravable = .Rows(i).Cells(11).Value.ToString() 'tipo gravable
-                ret_tipo_fact = .Rows(i).Cells(12).Value.ToString() 'tipo fact
-                ret_voucher = .Rows(i).Cells(13).Value.ToString() 'vocuher
-                ret_nro_docto = .Rows(i).Cells(14).Value.ToString() 'nro doctp
-                ret_nfact_corto = .Rows(i).Cells(15).Value.ToString() 'nro fact corto
-                ret_doc_relac = .Rows(i).Cells(16).Value.ToString() 'docto relacionado
-
-
-                Dim v_fereg As DateTime  'la fecha reg
-                v_fereg = Convert.ToDateTime(.Rows(i).Cells(17).Value.ToString()) 'la fecha reg
-                Dim lafechareg As String = v_fereg.ToString("yyyy-MM-dd HH:mm:ss")
-                ret_fe_reg = lafechareg 'fe reg
-
-                Dim v_fefact As DateTime  'la fecha fact
-                v_fefact = Convert.ToDateTime(.Rows(i).Cells(18).Value.ToString()) 'la fecha fact
-                Dim lafechafact As String = v_fefact.ToString("yyyy-MM-dd HH:mm:ss")
-                ret_fe_fact = lafechafact 'fe fact
-
-                Dim v_fevcto As DateTime  'la fecha vcto
-                v_fevcto = Convert.ToDateTime(.Rows(i).Cells(19).Value.ToString()) 'la fecha vcto
-                Dim lafechavcto As String = v_fevcto.ToString("yyyy-MM-dd HH:mm:ss")
-                ret_fe_vcto = lafechavcto 'fe fact
+                    ret_cobro = .Rows(i).Cells(0).Value.ToString() 'cobro
+                    ret_vend = .Rows(i).Cells(1).Value.ToString() 'vend
+                    ret_nomven = .Rows(i).Cells(2).Value.ToString() 'nomvend
+                    ret_datefield = .Rows(i).Cells(3).Value.ToString() 'date field
+                    ret_ldiario = .Rows(i).Cells(4).Value.ToString() 'ldiario
+                    ret_descrip = .Rows(i).Cells(5).Value.ToString() 'descripcion
+                    ret_tipoClie = .Rows(i).Cells(6).Value.ToString() 'tipo clie
+                    ret_descrip2 = .Rows(i).Cells(7).Value.ToString() 'tipo clie
+                    ret_nomclie = .Rows(i).Cells(8).Value.ToString() 'nombre cliente
+                    ret_seg_nom = .Rows(i).Cells(9).Value.ToString() 'tipo seg nom
+                    ret_abto = .Rows(i).Cells(10).Value.ToString() 'tipo abto
+                    ret_gravable = .Rows(i).Cells(11).Value.ToString() 'tipo gravable
+                    ret_tipo_fact = .Rows(i).Cells(12).Value.ToString() 'tipo fact
+                    ret_voucher = .Rows(i).Cells(13).Value.ToString() 'vocuher
+                    ret_nro_docto = .Rows(i).Cells(14).Value.ToString() 'nro doctp
+                    ret_nfact_corto = .Rows(i).Cells(15).Value.ToString() 'nro fact corto
+                    ret_doc_relac = .Rows(i).Cells(16).Value.ToString() 'docto relacionado
 
 
-                ret_mto_docto = .Rows(i).Cells(20).Value.ToString() 'mto docto
-                ret_abonos = .Rows(i).Cells(21).Value.ToString() 'abonos
+                    Dim v_fereg As DateTime  'la fecha reg
+                    v_fereg = Convert.ToDateTime(.Rows(i).Cells(17).Value.ToString()) 'la fecha reg
+                    Dim lafechareg As String = v_fereg.ToString("yyyy-MM-dd HH:mm:ss")
+                    ret_fe_reg = lafechareg 'fe reg
 
-                ret_con_seguro = .Rows(i).Cells(22).Value.ToString() 'con seguro
-                ret_zonal_cobro = .Rows(i).Cells(23).Value.ToString() 'zonal cobro
-                ret_mto_seguro = .Rows(i).Cells(24).Value.ToString() 'mto seguro
-                ret_bc_balanc = .Rows(i).Cells(25).Value.ToString() 'bc balance
+                    Dim v_fefact As DateTime  'la fecha fact
+                    v_fefact = Convert.ToDateTime(.Rows(i).Cells(18).Value.ToString()) 'la fecha fact
+                    Dim lafechafact As String = v_fefact.ToString("yyyy-MM-dd HH:mm:ss")
+                    ret_fe_fact = lafechafact 'fe fact
 
-                ' Dim v_feultpago As DateTime  'la fecha ultimo pago
-                'v_feultpago = Convert.ToDateTime(.Rows(i).Cells(26).Value.ToString()) 'la fecha vcto
-                ' Dim lafechaultpago As String = v_feultpago.ToString("yyyy-MM-dd HH:mm:ss")
-                'ret_ultPago = lafechaultpago
-                'If .Rows(i).Cells(26).Value.ToString() = "" Then
-                '   ret_ultPago = "1900-01-01"
-                'Else
-                ret_ultPago = .Rows(i).Cells(26).Value.ToString()
-                'End If
+                    Dim v_fevcto As DateTime  'la fecha vcto
+                    v_fevcto = Convert.ToDateTime(.Rows(i).Cells(19).Value.ToString()) 'la fecha vcto
+                    Dim lafechavcto As String = v_fevcto.ToString("yyyy-MM-dd HH:mm:ss")
+                    ret_fe_vcto = lafechavcto 'fe fact
 
 
-                ret_cuenta = .Rows(i).Cells(27).Value.ToString() 'cuenta
-                ret_descrip_cta = .Rows(i).Cells(28).Value.ToString() 'descrip cuenta
+                    ret_mto_docto = .Rows(i).Cells(20).Value.ToString() 'mto docto
+                    ret_abonos = .Rows(i).Cells(21).Value.ToString() 'abonos
+
+                    ret_con_seguro = .Rows(i).Cells(22).Value.ToString() 'con seguro
+                    ret_zonal_cobro = .Rows(i).Cells(23).Value.ToString() 'zonal cobro
+                    ret_mto_seguro = .Rows(i).Cells(24).Value.ToString() 'mto seguro
+                    ret_bc_balanc = .Rows(i).Cells(25).Value.ToString() 'bc balance
+
+                    ' Dim v_feultpago As DateTime  'la fecha ultimo pago
+                    'v_feultpago = Convert.ToDateTime(.Rows(i).Cells(26).Value.ToString()) 'la fecha vcto
+                    ' Dim lafechaultpago As String = v_feultpago.ToString("yyyy-MM-dd HH:mm:ss")
+                    'ret_ultPago = lafechaultpago
+                    'If .Rows(i).Cells(26).Value.ToString() = "" Then
+                    '   ret_ultPago = "1900-01-01"
+                    'Else
+                    ret_ultPago = .Rows(i).Cells(26).Value.ToString()
+                    'End If
 
 
-                'ret_totalCargos = .Rows(i).Cells(8).Value.ToString() 'total cargos
-
-                cmd = New MySqlCommand("Insert Into Datos_fuente (Cobr_A, Salesperson, OrdenarNombre, Custom, Ldiario, descripcion, TipoClte, Descrip2, Nombre, SegundoName, abto, gravable, TipoFact, Voucher, nrodocto, nroFactura, doctoRelacion, FeRegistro, FeFact, FeVcto, MontoDocto, abonos, Seguro, ZonalCobro, MontoSeguro, BCBalance, UltimoPago, cuenta, descripCta )" &
-       " Values ('" & ret_cobro & "', '" & ret_vend & "', '" & ret_nomven & "', '" & ret_datefield & "', '" & ret_ldiario & "', '" & ret_descrip & "', '" & ret_tipoClie & "', '" & ret_descrip2 & "', '" & ret_nomclie & "', '" & ret_seg_nom & "', '" & ret_abto & "', '" & ret_gravable & "', " &
-       " '" & ret_tipo_fact & "', '" & ret_voucher & "', '" & ret_nro_docto & "', '" & ret_nfact_corto & "', '" & ret_doc_relac & "', '" & ret_fe_reg & "', '" & ret_fe_fact & "', '" & ret_fe_vcto & "', '" & ret_mto_docto & "', '" & ret_abonos & "', '" & ret_con_seguro & "', '" & ret_zonal_cobro & "', '" & ret_mto_seguro & "', '" & ret_bc_balanc & "', '" & ret_ultPago & "', '" & ret_cuenta & "', '" & ret_descrip_cta & "')", conexion)
-                cmd.ExecuteNonQuery()
-                Me.Refresh()
-
-            Next
+                    ret_cuenta = .Rows(i).Cells(27).Value.ToString() 'cuenta
+                    ret_descrip_cta = .Rows(i).Cells(28).Value.ToString() 'descrip cuenta
 
 
+                    'ret_totalCargos = .Rows(i).Cells(8).Value.ToString() 'total cargos
 
-        End With
+                    cmd = New MySqlCommand("Insert Into Datos_fuente (Cobr_A, Salesperson, OrdenarNombre, Custom, Ldiario, descripcion, TipoClte, Descrip2, Nombre, SegundoName, abto, gravable, TipoFact, Voucher, nrodocto, nroFactura, doctoRelacion, FeRegistro, FeFact, FeVcto, MontoDocto, abonos, Seguro, ZonalCobro, MontoSeguro, BCBalance, UltimoPago, cuenta, descripCta )" &
+           " Values ('" & ret_cobro & "', '" & ret_vend & "', '" & ret_nomven & "', '" & ret_datefield & "', '" & ret_ldiario & "', '" & ret_descrip & "', '" & ret_tipoClie & "', '" & ret_descrip2 & "', '" & ret_nomclie & "', '" & ret_seg_nom & "', '" & ret_abto & "', '" & ret_gravable & "', " &
+           " '" & ret_tipo_fact & "', '" & ret_voucher & "', '" & ret_nro_docto & "', '" & ret_nfact_corto & "', '" & ret_doc_relac & "', '" & ret_fe_reg & "', '" & ret_fe_fact & "', '" & ret_fe_vcto & "', '" & ret_mto_docto & "', '" & ret_abonos & "', '" & ret_con_seguro & "', '" & ret_zonal_cobro & "', '" & ret_mto_seguro & "', '" & ret_bc_balanc & "', '" & ret_ultPago & "', '" & ret_cuenta & "', '" & ret_descrip_cta & "')", conexion)
+                    cmd.ExecuteNonQuery()
+                    Me.Refresh()
 
-        conexion.Close()
-        MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
-        Cursor.Current = Cursors.Default
-        lbl_cartel.Visible = False
+                Next
 
-        'Catch ex As Exception
-        '    MessageBox.Show(ex.Message)
 
-        'End Try
+
+            End With
+
+            conexion.Close()
+            MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
+
+            Dim lafecha As String = DateTime.Now.ToString((" yyyy-MM-dd"))
+
+            Call conn1()
+            If conexion.State = 1 Then conexion.Close()
+            conexion.Open()
+            cmd2 = New MySqlCommand("insert into ultima_carga  (id, fecha) values ('0', '" & lafecha & "')", conexion)
+            cmd2.ExecuteNonQuery()
+
+
+
+            Cursor.Current = Cursors.Default
+            lbl_cartel.Visible = False
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+
+        End Try
 
 
 
@@ -496,4 +519,6 @@ Public Class frm_carga_base
     Private Sub cmd_instrucciones_Click(sender As Object, e As EventArgs) Handles cmd_instrucciones.Click
         frm_intrucciones.Show()
     End Sub
+
+
 End Class

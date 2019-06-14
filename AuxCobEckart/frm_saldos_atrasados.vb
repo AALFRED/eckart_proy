@@ -151,6 +151,18 @@ Public Class frm_saldos_atrasados
 
         If var = 1 Then 'buscar por mysql
             Dim cmd1 As New MySqlCommand
+
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
+
+            Else
+                'MODO RED
+                Call Conectar()
+            End If
+
+
+
             If conexion.State = 1 Then conexion.Close()
             conexion.Open()
 
@@ -322,10 +334,13 @@ Public Class frm_saldos_atrasados
             If var = 1 Then  'busca en mysql
 
                 Dim cmd3 As MySqlCommand = New MySqlCommand
-                If connex = 1 Then
-                    Call conn1()
+                If Connex = 0 Then
+                    'MODO LOCAL
+                    Call conn3()
+
                 Else
-                    Call conn3 'red
+                    'MODO RED
+                    Call Conectar()
                 End If
 
                 If conexion.State = 1 Then conexion.Close()
@@ -471,15 +486,6 @@ Public Class frm_saldos_atrasados
 
         End If
     End Sub
-
-    Private Sub Label5_Click(sender As Object, e As EventArgs) Handles Label5.Click
-
-    End Sub
-
-    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
-
-    End Sub
-
     Private Sub grilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grilla.CellContentClick
 
     End Sub

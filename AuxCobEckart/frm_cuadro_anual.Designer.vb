@@ -54,7 +54,7 @@ Partial Class frm_cuadro_anual
         Me.GroupBox1.Controls.Add(Me.cbo_anio)
         Me.GroupBox1.Location = New System.Drawing.Point(40, 24)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1178, 99)
+        Me.GroupBox1.Size = New System.Drawing.Size(881, 99)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Parámetros de Carga"
@@ -62,7 +62,7 @@ Partial Class frm_cuadro_anual
         'lbl_cartel
         '
         Me.lbl_cartel.AutoSize = True
-        Me.lbl_cartel.Location = New System.Drawing.Point(768, 45)
+        Me.lbl_cartel.Location = New System.Drawing.Point(651, 48)
         Me.lbl_cartel.Name = "lbl_cartel"
         Me.lbl_cartel.Size = New System.Drawing.Size(57, 15)
         Me.lbl_cartel.TabIndex = 6
@@ -72,7 +72,7 @@ Partial Class frm_cuadro_anual
         '
         Me.cmd_cancelar.Image = Global.AuxCobEckart.My.Resources.Resources.cancel
         Me.cmd_cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmd_cancelar.Location = New System.Drawing.Point(564, 38)
+        Me.cmd_cancelar.Location = New System.Drawing.Point(503, 38)
         Me.cmd_cancelar.Name = "cmd_cancelar"
         Me.cmd_cancelar.Size = New System.Drawing.Size(126, 40)
         Me.cmd_cancelar.TabIndex = 5
@@ -94,7 +94,7 @@ Partial Class frm_cuadro_anual
         '
         Me.cmd_exp_excel.Image = Global.AuxCobEckart.My.Resources.Resources.export_excel
         Me.cmd_exp_excel.ImageAlign = System.Drawing.ContentAlignment.TopRight
-        Me.cmd_exp_excel.Location = New System.Drawing.Point(986, 38)
+        Me.cmd_exp_excel.Location = New System.Drawing.Point(714, 38)
         Me.cmd_exp_excel.Name = "cmd_exp_excel"
         Me.cmd_exp_excel.Size = New System.Drawing.Size(125, 41)
         Me.cmd_exp_excel.TabIndex = 3
@@ -148,7 +148,7 @@ Partial Class frm_cuadro_anual
         Me.GroupBox2.Controls.Add(Me.grilla)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 129)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(1219, 540)
+        Me.GroupBox2.Size = New System.Drawing.Size(942, 540)
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Detalle Anual"
@@ -167,7 +167,7 @@ Partial Class frm_cuadro_anual
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(1039, 517)
+        Me.Label2.Location = New System.Drawing.Point(637, 493)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(145, 15)
         Me.Label2.TabIndex = 66
@@ -202,7 +202,7 @@ Partial Class frm_cuadro_anual
         Me.grilla.Location = New System.Drawing.Point(6, 22)
         Me.grilla.Name = "grilla"
         Me.grilla.ReadOnly = True
-        Me.grilla.Size = New System.Drawing.Size(1207, 428)
+        Me.grilla.Size = New System.Drawing.Size(915, 428)
         Me.grilla.TabIndex = 0
         '
         'frm_cuadro_anual
@@ -210,7 +210,7 @@ Partial Class frm_cuadro_anual
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.InactiveCaption
-        Me.ClientSize = New System.Drawing.Size(1243, 697)
+        Me.ClientSize = New System.Drawing.Size(966, 697)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Calibri", 9.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))

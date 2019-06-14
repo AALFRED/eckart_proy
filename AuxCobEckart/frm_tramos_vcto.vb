@@ -244,10 +244,13 @@ Public Class frm_tramos_vcto
 
                 Dim cmd3 As MySqlCommand = New MySqlCommand
 
-                If Connex = 1 Then
-                    Call conn1()
+                If Connex = 0 Then
+                    'MODO LOCAL
+                    Call conn3()
+
                 Else
-                    Call conn3() 'red
+                    'MODO RED
+                    Call Conectar()
                 End If
 
                 If conexion.State = 1 Then conexion.Close()

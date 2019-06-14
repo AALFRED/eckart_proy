@@ -618,9 +618,9 @@ Public Class frm_incobrables
 
 
         If Connex = 1 Then
-            Call conn1()
+            Call conn1() 'local
         Else
-            Call conn3() 'red
+            Call Conectar() 'red
         End If
         If conexion.State = 1 Then conexion.Close()
         conexion.Open()
@@ -799,9 +799,9 @@ Public Class frm_incobrables
 
                     ' conexion.Close()
                     If Connex = 1 Then
-                        Call conn1()
+                        Call conn1() 'local
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -838,9 +838,9 @@ Public Class frm_incobrables
                     Dim cmd2 As MySqlCommand = New MySqlCommand
 
                     If Connex = 1 Then
-                        Call conn1()
+                        Call conn1() 'local
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -878,7 +878,7 @@ Public Class frm_incobrables
                     If Connex = 1 Then
                         Call conn1()
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -916,7 +916,7 @@ Public Class frm_incobrables
                     If Connex = 1 Then
                         Call conn1()
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -950,7 +950,7 @@ Public Class frm_incobrables
                     If Connex = 1 Then
                         Call conn1()
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     'If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -986,7 +986,7 @@ Public Class frm_incobrables
                     If Connex = 1 Then
                         Call conn1()
                     Else
-                        Call conn3() 'red
+                        Call Conectar() 'red
                     End If
                     If conexion.State = 1 Then conexion.Close()
                     conexion.Open()
@@ -1479,7 +1479,7 @@ Public Class frm_incobrables
             If Connex = 1 Then
                 Call conn1()
             Else
-                Call conn3() 'red
+                Call Conectar() 'red
             End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
@@ -1547,7 +1547,7 @@ Public Class frm_incobrables
             If Connex = 1 Then
                 Call conn1()
             Else
-                Call conn3() 'red
+                Call Conectar() 'red
             End If
             ' If conexion.State = 1 Then conexion.Close()
             conexion.Open()
@@ -1613,7 +1613,7 @@ Public Class frm_incobrables
             If Connex = 1 Then
                 Call conn1()
             Else
-                Call conn3() 'red
+                Call Conectar() 'red
             End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()
@@ -1694,7 +1694,7 @@ Public Class frm_incobrables
             If Connex = 1 Then
                 Call conn1()
             Else
-                Call conn3() 'red
+                Call Conectar() 'red
             End If
             'If conexion.State = 1 Then conexion.Close()
             conexion.Open()

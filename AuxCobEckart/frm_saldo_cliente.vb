@@ -220,11 +220,6 @@ Public Class frm_saldo_cliente
                 'aplicacion.Workbooks.Open(strFileName)
                 'aplicacion.Visible = True
 
-
-
-
-
-
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Exp_excel mysql")
@@ -479,7 +474,14 @@ Public Class frm_saldo_cliente
             mifecha = msk_fe_ini.Text
             mifecha2 = msk_fe_fin.Text
 
-            Call conn1()
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
+
+            Else
+                'MODO RED
+                Call Conectar()
+            End If
             If conexion.State = 1 Then conexion.Close()
             conexion.Open()
             cmd4.Connection = conexion
@@ -553,6 +555,8 @@ Public Class frm_saldo_cliente
     End Sub
 
     Private Sub grilla_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles grilla.CellMouseClick
+        Dim cmd12 As MySqlCommand = New MySqlCommand
+
         If var = 1 Then
             'carga con mysql
 
@@ -561,11 +565,16 @@ Public Class frm_saldo_cliente
             mifecha = msk_fe_ini.Text
             mifecha2 = msk_fe_fin.Text
 
-            Dim cmd12 As MySqlCommand = New MySqlCommand
+            If Connex = 0 Then
+                'MODO LOCAL
+                Call conn3()
 
-            conexion.Close()
-            Call conn1()
-            'If conexion.State = 1 Then conexion.Close()
+            Else
+                'MODO RED
+                Call Conectar()
+            End If
+
+            If conexion.State = 1 Then conexion.Close()
             conexion.Open()
             cmd12.Connection = conexion
 

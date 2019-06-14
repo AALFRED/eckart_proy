@@ -61,7 +61,7 @@ Partial Class frm_Acceso
         '
         Me.LogoPictureBox.Image = Global.AuxCobEckart.My.Resources.Resources.eckart
         Me.LogoPictureBox.InitialImage = Global.AuxCobEckart.My.Resources.Resources.eckart
-        Me.LogoPictureBox.Location = New System.Drawing.Point(36, 64)
+        Me.LogoPictureBox.Location = New System.Drawing.Point(35, 38)
         Me.LogoPictureBox.Name = "LogoPictureBox"
         Me.LogoPictureBox.Size = New System.Drawing.Size(144, 92)
         Me.LogoPictureBox.TabIndex = 5
@@ -93,7 +93,7 @@ Partial Class frm_Acceso
         'cbo_tipo_conn
         '
         Me.cbo_tipo_conn.FormattingEnabled = True
-        Me.cbo_tipo_conn.Location = New System.Drawing.Point(238, 64)
+        Me.cbo_tipo_conn.Location = New System.Drawing.Point(238, 54)
         Me.cbo_tipo_conn.Name = "cbo_tipo_conn"
         Me.cbo_tipo_conn.Size = New System.Drawing.Size(93, 21)
         Me.cbo_tipo_conn.TabIndex = 1
@@ -141,6 +141,7 @@ Partial Class frm_Acceso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.ClientSize = New System.Drawing.Size(645, 264)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label3)
