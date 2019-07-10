@@ -120,7 +120,7 @@ Partial Class Principal
         '
         'cmd_det_deuda_clie
         '
-        Me.cmd_det_deuda_clie.Location = New System.Drawing.Point(32, 139)
+        Me.cmd_det_deuda_clie.Location = New System.Drawing.Point(445, 46)
         Me.cmd_det_deuda_clie.Name = "cmd_det_deuda_clie"
         Me.cmd_det_deuda_clie.Size = New System.Drawing.Size(169, 52)
         Me.cmd_det_deuda_clie.TabIndex = 4
@@ -140,7 +140,7 @@ Partial Class Principal
         '
         'cmd_tramos_vcto
         '
-        Me.cmd_tramos_vcto.Location = New System.Drawing.Point(250, 139)
+        Me.cmd_tramos_vcto.Location = New System.Drawing.Point(32, 136)
         Me.cmd_tramos_vcto.Name = "cmd_tramos_vcto"
         Me.cmd_tramos_vcto.Size = New System.Drawing.Size(169, 52)
         Me.cmd_tramos_vcto.TabIndex = 2
@@ -150,13 +150,14 @@ Partial Class Principal
         '
         'cmd_saldos_vend
         '
-        Me.cmd_saldos_vend.Location = New System.Drawing.Point(456, 46)
+        Me.cmd_saldos_vend.Location = New System.Drawing.Point(851, 11)
         Me.cmd_saldos_vend.Name = "cmd_saldos_vend"
-        Me.cmd_saldos_vend.Size = New System.Drawing.Size(169, 52)
+        Me.cmd_saldos_vend.Size = New System.Drawing.Size(34, 33)
         Me.cmd_saldos_vend.TabIndex = 1
         Me.cmd_saldos_vend.Text = "Saldos por Vendedor (monto total deuda)"
         Me.ToolTip1.SetToolTip(Me.cmd_saldos_vend, "Fecha de Vencimiento menos fecha actual")
         Me.cmd_saldos_vend.UseVisualStyleBackColor = True
+        Me.cmd_saldos_vend.Visible = False
         '
         'cmd_saldo_atrasado
         '

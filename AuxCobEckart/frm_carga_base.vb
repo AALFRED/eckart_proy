@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 
 
 Imports AuxCobEckart
@@ -24,6 +24,31 @@ Imports System.Globalization
 Public Class frm_carga_base
 
     Dim var As Integer
+
+    Sub registra_ultima_carga()
+
+        Dim cmd As New SqlCommand
+        Dim fecha As Date
+
+        fecha = DateTime.Now.ToString("yyyy-MM-dd")
+
+        Call Conectar2()
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+
+
+        cmd = New SqlCommand("Insert Into ultima_carga (fecha) Values ('" & fecha & "')", conexion2)
+        cmd.ExecuteNonQuery()
+
+        conexion2.Close()
+        cmd.Dispose()
+
+
+        Me.Refresh()
+
+
+    End Sub
+
 
     Private Sub frm_carga_base_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -76,8 +101,6 @@ Public Class frm_carga_base
         Me.Controls.Add(BarraStatus)
 
 
-
-
         lbl_traspaso.Text = ""
             lbl_nroreg.Text = ""
             lbl_traspaso.Visible = False
@@ -90,9 +113,11 @@ Public Class frm_carga_base
 
             cmd_truncate_bd.Enabled = False
 
-            'carga de tipo de bd
-            cbo_tpo.Items.Add("BD MYSQL")
-            cbo_tpo.Items.Add("BD ACCESS")
+        'carga de tipo de bd
+        cbo_tpo.Items.Add("BD SQL SERVER")
+        cbo_tpo.Text = "BD SQL SERVER"
+
+
 
 
 
@@ -141,8 +166,8 @@ Public Class frm_carga_base
     End Sub
 
     Private Sub cmd_cargar_Click(sender As Object, e As EventArgs) Handles cmd_cargar_mysql.Click
-        Dim cmd As MySqlCommand = New MySqlCommand
-        Dim cmd2 As MySqlCommand = New MySqlCommand
+        Dim cmd As SqlCommand = New SqlCommand
+        Dim cmd2 As SqlCommand = New SqlCommand
 
 
         Dim ret_cobro As String
@@ -176,6 +201,9 @@ Public Class frm_carga_base
         Dim ret_descrip_cta As String
 
         Try
+
+            Call registra_ultima_carga()
+
             System.Windows.Forms.Application.DoEvents()
 
             lbl_traspaso.Visible = True
@@ -183,9 +211,9 @@ Public Class frm_carga_base
             'MsgBox("...Cargando Datos a la Base", MsgBoxStyle.Information)
 
             ' MsgBox("conexion establecida--")
-            Call conn1()
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            Call Conectar2()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
             Cursor.Current = Cursors.WaitCursor
             Me.grilla.Invalidate()
@@ -258,9 +286,9 @@ Public Class frm_carga_base
 
                     'ret_totalCargos = .Rows(i).Cells(8).Value.ToString() 'total cargos
 
-                    cmd = New MySqlCommand("Insert Into Datos_fuente (Cobr_A, Salesperson, OrdenarNombre, Custom, Ldiario, descripcion, TipoClte, Descrip2, Nombre, SegundoName, abto, gravable, TipoFact, Voucher, nrodocto, nroFactura, doctoRelacion, FeRegistro, FeFact, FeVcto, MontoDocto, abonos, Seguro, ZonalCobro, MontoSeguro, BCBalance, UltimoPago, cuenta, descripCta )" &
+                    cmd = New SqlCommand("Insert Into Datos_fuente (Cobr_A, Salesperson, OrdenarNombre, Custom, Ldiario, descripcion, TipoClte, Descrip2, Nombre, SegundoName, abto, gravable, TipoFact, Voucher, nrodocto, nroFactura, doctoRelacion, FeRegistro, FeFact, FeVcto, MontoDocto, abonos, Seguro, ZonalCobro, MontoSeguro, BCBalance, UltimoPago, cuenta, descripCta )" &
            " Values ('" & ret_cobro & "', '" & ret_vend & "', '" & ret_nomven & "', '" & ret_datefield & "', '" & ret_ldiario & "', '" & ret_descrip & "', '" & ret_tipoClie & "', '" & ret_descrip2 & "', '" & ret_nomclie & "', '" & ret_seg_nom & "', '" & ret_abto & "', '" & ret_gravable & "', " &
-           " '" & ret_tipo_fact & "', '" & ret_voucher & "', '" & ret_nro_docto & "', '" & ret_nfact_corto & "', '" & ret_doc_relac & "', '" & ret_fe_reg & "', '" & ret_fe_fact & "', '" & ret_fe_vcto & "', '" & ret_mto_docto & "', '" & ret_abonos & "', '" & ret_con_seguro & "', '" & ret_zonal_cobro & "', '" & ret_mto_seguro & "', '" & ret_bc_balanc & "', '" & ret_ultPago & "', '" & ret_cuenta & "', '" & ret_descrip_cta & "')", conexion)
+           " '" & ret_tipo_fact & "', '" & ret_voucher & "', '" & ret_nro_docto & "', '" & ret_nfact_corto & "', '" & ret_doc_relac & "', '" & ret_fe_reg & "', '" & ret_fe_fact & "', '" & ret_fe_vcto & "', '" & ret_mto_docto & "', '" & ret_abonos & "', '" & ret_con_seguro & "', '" & ret_zonal_cobro & "', '" & ret_mto_seguro & "', '" & ret_bc_balanc & "', '" & ret_ultPago & "', '" & ret_cuenta & "', '" & ret_descrip_cta & "')", conexion2)
                     cmd.ExecuteNonQuery()
                     Me.Refresh()
 
@@ -270,16 +298,16 @@ Public Class frm_carga_base
 
             End With
 
-            conexion.Close()
+            conexion2.Close()
             MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
 
-            Dim lafecha As String = DateTime.Now.ToString((" yyyy-MM-dd"))
+            'Dim lafecha As String = DateTime.Now.ToString((" yyyy-MM-dd"))
 
-            Call conn1()
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd2 = New MySqlCommand("insert into ultima_carga  (id, fecha) values ('0', '" & lafecha & "')", conexion)
-            cmd2.ExecuteNonQuery()
+            'Call Conectar2()
+            'If conexion2.State = 1 Then conexion2.Close()
+            'conexion2.Open()
+            'cmd2 = New SqlCommand("insert into ultima_carga  (id, fecha) values ('0', '" & lafecha & "')", conexion2)
+            'cmd2.ExecuteNonQuery()
 
 
 
@@ -492,13 +520,14 @@ Public Class frm_carga_base
     Private Sub cmd_cancelar_Click(sender As Object, e As EventArgs) Handles cmd_cancelar.Click
         Me.Close()
         'frm_menu.Show()
+        Principal.Ultima_Carga_datos()
         Principal.Show()
 
     End Sub
 
     Private Sub cbo_tpo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_tpo.SelectedIndexChanged
         Select Case cbo_tpo.Text
-            Case "BD MYSQL"
+            Case "BD SQL SERVER"
 
                 cmd_cargar_datos.Enabled = True
                 cmd_truncate_bd.Enabled = True
@@ -509,9 +538,6 @@ Public Class frm_carga_base
                 cmd_cargar_datos.Enabled = True
                 cmd_truncate_bd.Enabled = True
                 var = 2
-
-
-
 
         End Select
     End Sub

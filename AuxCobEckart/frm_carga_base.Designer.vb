@@ -121,7 +121,7 @@ Partial Class frm_carga_base
         Me.cmd_cargar_mysql.Name = "cmd_cargar_mysql"
         Me.cmd_cargar_mysql.Size = New System.Drawing.Size(104, 23)
         Me.cmd_cargar_mysql.TabIndex = 1
-        Me.cmd_cargar_mysql.Text = "Cargar Mysql"
+        Me.cmd_cargar_mysql.Text = "Cargar a BD"
         Me.cmd_cargar_mysql.UseVisualStyleBackColor = True
         '
         'cmd_cargar_datos

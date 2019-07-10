@@ -10,31 +10,32 @@ Imports System.Object
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
+
 
 
 Public Class Parametros
     Dim bloqueoUser As Integer
 
     Public Function cargacombo(ByVal TABLENAME As String, ByVal fldName As String, ByVal cmbname As ComboBox)
-        Dim cmd1 As New MySqlCommand
-        Dim dr1 As MySqlDataReader
+        Dim cmd1 As New SqlCommand
+        Dim dr1 As SqlDataReader
 
-        Call conn1()
+        Call Conectar2()
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd1 = New MySqlCommand("select " & fldName & " from " & TABLENAME & " order by " & fldName, conexion)
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+        cmd1 = New SqlCommand("select " & fldName & " from " & TABLENAME & " order by " & fldName, conexion2)
 
 
-            dr1 = cmd1.ExecuteReader
+        dr1 = cmd1.ExecuteReader
             cmbname.Items.Clear()
             Do While dr1.Read()
                 cmbname.Items.Add(dr1(fldName))
             Loop
             dr1.Close()
-            conexion.Close()
-            cmd1.Dispose()
+        conexion2.Close()
+        cmd1.Dispose()
 
 
         Return 0
@@ -89,31 +90,31 @@ Public Class Parametros
     Sub Carga_datos()
 
         Try
-            Dim cmd1 As New MySqlCommand
+            Dim cmd1 As New SqlCommand
 
 
             'conecta a mysql
 
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd1.Connection = conexion
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
+            cmd1.Connection = conexion2
 
 
             cmd1.CommandText = "SELECT * FROM usuarios ORDER BY usuario ASC"
 
 
             Dim dt As System.Data.DataTable = New System.Data.DataTable
-            Dim da As MySqlDataAdapter = New MySqlDataAdapter(cmd1)
+            Dim da As SqlDataAdapter = New SqlDataAdapter(cmd1)
             da.Fill(dt)
             grilla.DataSource = dt
 
-            conexion.Close()
+            conexion2.Close()
             da.Dispose()
             cmd1.Dispose()
 
@@ -127,26 +128,26 @@ Public Class Parametros
 
 
     Private Sub cmd_grabar_usr_Click(sender As Object, e As EventArgs) Handles cmd_grabar_usr.Click
-        Dim cmd3 As New MySqlCommand
+        Dim cmd3 As New SqlCommand
 
         Try
 
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
             If bloqueoUser = 0 Then
-                cmd3 = New MySqlCommand("Insert Into usuarios (id, usuario, pass, perfil, bloqueo) Values (0,'" & txt_user.Text & "', '" & txt_pass.Text & "', '2', '0' )", conexion)
+                cmd3 = New SqlCommand("Insert Into usuarios (id, usuario, pass, perfil, bloqueo) Values (0,'" & txt_user.Text & "', '" & txt_pass.Text & "', '2', '0' )", conexion2)
             Else
-                cmd3 = New MySqlCommand("Insert Into usuarios (id, usuario, pass, perfil, bloqueo) Values (0,'" & txt_user.Text & "', '" & txt_pass.Text & "', '2', '" & bloqueoUser & "' )", conexion)
+                cmd3 = New SqlCommand("Insert Into usuarios (id, usuario, pass, perfil, bloqueo) Values (0,'" & txt_user.Text & "', '" & txt_pass.Text & "', '2', '" & bloqueoUser & "' )", conexion2)
             End If
             cmd3.ExecuteNonQuery()
 
-            conexion.Close()
+            conexion2.Close()
             cmd3.Dispose()
 
             MsgBox("Datos Almacenados para perfil", MsgBoxStyle.Information)
@@ -195,23 +196,22 @@ Public Class Parametros
     End Sub
 
     Private Sub cmd_grabar_perfil_Click(sender As Object, e As EventArgs) Handles cmd_grabar_perfil.Click
-        Dim cmd As New MySqlCommand
+        Dim cmd As New SqlCommand
 
         Try
 
-
             If Connex = 1 Then
-            Call Conectar()
-        Else
-            Call conn1()
-        End If
+                Call Conectar2()
+            Else
+                Call Conectar2()
+            End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd = New MySqlCommand("Insert Into perfil (id, perfil) Values (0,'" & txt_perfil.Text() & "')", conexion)
+            If conexion.State = 1 Then conexion2.Close()
+            conexion2.Open()
+            cmd = New SqlCommand("Insert Into perfil (id, perfil) Values (0,'" & txt_perfil.Text() & "')", conexion2)
             cmd.ExecuteNonQuery()
 
-            conexion.Close()
+            conexion2.Close()
             cmd.Dispose()
 
             MsgBox("Datos Almacenados para perfil", MsgBoxStyle.Information)
@@ -233,26 +233,26 @@ Public Class Parametros
     End Sub
 
     Private Sub cmd_asig_perfil_Click(sender As Object, e As EventArgs) Handles cmd_asig_perfil.Click
-        Dim cmd As MySqlCommand = New MySqlCommand
+        Dim cmd As SqlCommand = New SqlCommand
         Dim conf As Integer = 0
 
         Try
 
 
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
 
-            cmd = New MySqlCommand("Update usuarios Set perfil = '" & lbl_id.Text & "' where usuario = '" & cbo_usuario.Text & "'", conexion)
+            cmd = New SqlCommand("Update usuarios Set perfil = '" & lbl_id.Text & "' where usuario = '" & cbo_usuario.Text & "'", conexion2)
 
             cmd.ExecuteNonQuery()
-            conexion.Close()
+            conexion2.Close()
             cmd.Dispose()
             Call Carga_datos()
 
@@ -267,21 +267,21 @@ Public Class Parametros
     Private Sub cbo_perfil_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_perfil.SelectedIndexChanged
 
         Dim Sql As String
-        Dim com As New MySqlCommand
-        Dim rs As MySqlDataReader
+        Dim com As New SqlCommand
+        Dim rs As SqlDataReader
 
         Try
 
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
             Sql = "SELECT id FROM perfil where perfil= '" & cbo_perfil.Text & "'"
-            com = New MySqlCommand(Sql, conexion)
+            com = New SqlCommand(Sql, conexion2)
             rs = com.ExecuteReader()
             If rs.HasRows() Then
                 rs.Read()
@@ -304,21 +304,21 @@ Public Class Parametros
 
     Private Sub cbo_perfil_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbo_perfil.SelectedValueChanged
         Dim Sql As String
-        Dim com As New MySqlCommand
-        Dim rs As MySqlDataReader
+        Dim com As New SqlCommand
+        Dim rs As SqlDataReader
 
         Try
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
             Sql = "SELECT id, perfil FROM perfil where perfil= '" & cbo_perfil.Text & "'"
-            com = New MySqlCommand(Sql, conexion)
+            com = New SqlCommand(Sql, conexion2)
             rs = com.ExecuteReader()
             If rs.HasRows() Then
                 rs.Read()
@@ -368,26 +368,26 @@ Public Class Parametros
     End Sub
 
     Private Sub cmd_actualiza_Click(sender As Object, e As EventArgs) Handles cmd_actualiza.Click
-        Dim cmd4 As New MySqlCommand
+        Dim cmd4 As New SqlCommand
 
 
         Try
 
 
             If Connex = 1 Then
-                Call Conectar()
+                Call Conectar2()
             Else
-                Call conn1()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
-            cmd4 = New MySqlCommand("Update usuarios set usuario = '" & txt_user.Text & "', pass = '" & txt_pass.Text & "', bloqueo = '" & bloqueoUser & "' where id = '" & lbl_id_user.Text & "'", conexion)
+            cmd4 = New SqlCommand("Update usuarios set usuario = '" & txt_user.Text & "', pass = '" & txt_pass.Text & "', bloqueo = '" & bloqueoUser & "' where id = '" & lbl_id_user.Text & "'", conexion2)
 
             cmd4.ExecuteNonQuery()
 
-            conexion.Close()
+            conexion2.Close()
             cmd4.Dispose()
             Call Carga_datos()
 
@@ -403,14 +403,15 @@ Public Class Parametros
         Dim Query As String
 
         Try
-            Call Conectar()
+            Call Conectar2()
+
             Call elano()
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
             Query = "Delete FROM usuarios WHERE id = '" & lbl_id_user.Text & "'"
 
-            Dim cmd As MySqlCommand = New MySqlCommand(Query, conexion)
-            conexion.Close()
+            Dim cmd As SqlCommand = New SqlCommand(Query, conexion2)
+            conexion2.Close()
 
             MsgBox("El Usuario fue Eliminado", MsgBoxStyle.Information)
             txt_user.Text = ""

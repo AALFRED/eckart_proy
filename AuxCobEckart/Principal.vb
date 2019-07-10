@@ -9,15 +9,16 @@ Imports System.Windows.Forms
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports System.Net
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports AuxCobEckart
 
 
+
 Public Class Principal
-    Dim cmd3 As MySqlCommand = New MySqlCommand
+    Dim cmd3 As SqlCommand = New SqlCommand
     Dim sql As String
-    Dim com As New MySqlCommand
-    Dim rs As MySqlDataReader
+    Dim com As New SqlCommand
+    Dim rs As SqlDataReader
     Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 
 
@@ -27,22 +28,24 @@ Public Class Principal
 
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
+                'Call conn3()
+                Call Conectar2()
+
 
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
-            sql = "SELECT id, MAX(fecha) FROM ultima_carga"
-            com = New MySqlCommand(sql, conexion)
+            sql = "SELECT MAX(fecha) FROM ultima_carga"
+            com = New SqlCommand(sql, conexion2)
             rs = com.ExecuteReader()
             If rs.HasRows() Then
                 rs.Read()
 
-                lbl_carga_datos.Text = rs.GetString(1)
+                lbl_carga_datos.Text = rs.GetDateTime(0)
 
             Else
                 lbl_carga_datos.Text = "No definido"
@@ -150,27 +153,19 @@ Public Class Principal
     End Sub
 
     Private Sub cmd_clientes_Click(sender As Object, e As EventArgs) Handles cmd_clientes.Click
-        If Connex = 1 Then
-            MsgBox("Este Módulo sólo funciona en entorno local de administración", MsgBoxStyle.Critical)
-            Me.Show()
 
-        Else
 
-            Me.Hide()
+        Me.Hide()
         frm_cliente.Show()
-        End If
+
 
     End Sub
 
     Private Sub cmd_carga_base_Click(sender As Object, e As EventArgs) Handles cmd_carga_base.Click
-        If Connex = 1 Then
-            MsgBox("Este Módulo sólo funciona en entorno local de administración", MsgBoxStyle.Critical)
-            Me.Show()
 
-        Else
-            Me.Hide()
-            frm_carga_base.Show()
-        End If
+        Me.Hide()
+        frm_carga_base.Show()
+
 
     End Sub
 

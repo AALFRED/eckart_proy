@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 Imports AuxCobEckart
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports Microsoft.Office.Interop.Excel
 Imports System.Globalization
 
@@ -322,22 +322,22 @@ Public Class frm_cuadro_anual
     End Sub
 
     Private Sub cmd_buscar_Click(sender As Object, e As EventArgs) Handles cmd_buscar.Click
-        Dim cmd6 As MySqlCommand = New MySqlCommand
+        Dim cmd6 As SqlCommand = New SqlCommand
 
 
         If Connex = 0 Then
             'MODO LOCAL
-            Call conn3()
+            Call Conectar2()
 
         Else
             'MODO RED
-            Call Conectar()
+            Call Conectar2()
         End If
 
-        If conexion.State = 1 Then conexion.Close()
-        conexion.Open()
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
 
-        cmd6.Connection = conexion
+        cmd6.Connection = conexion2
 
         'cmd.CommandText = "SELECT nombre, Sum(BCBalance) tot  FROM datos_fuente  where FeVcto <= '2019-02-28' group by Cobr_A order by nombre ASC"
         cmd6.CommandText = "SELECT * FROM (SELECT DISTINCT Cobr_A, ltrim(rtrim(Nombre)), sum(case when MONTH(FeVcto) = 1 then BCBalance end) as ENE, sum(case when MONTH(FeVcto) = 2  then BCBalance end) as FEB, sum(case when MONTH(FeVcto) = 3 then BCBalance end) as MAR, sum(case when MONTH(FeVcto) = 4 then BCBalance end) as ABR, sum(case when MONTH(FeVcto) = 5 then BCBalance end) as MAY, sum(case when MONTH(FeVcto) = 6 then BCBalance end) as JUN, sum(case when MONTH(FeVcto) = 7 then BCBalance end) as JUL, sum(case when MONTH(FeVcto) = 8 then BCBalance end) as AGO, sum(case when MONTH(FeVcto) = 9 then BCBalance end) as SEP, sum(case when MONTH(FeVcto) = 10 then BCBalance end) as OCT, sum(case when MONTH(FeVcto) = 11 then BCBalance end) as NOV, sum(case when MONTH(FeVcto) = 12 then BCBalance end) as DIC, sum(CASE WHEN Left(TipoFact,4) = 'CRED' THEN  BCBalance * -1  else BCBalance end) as total
@@ -345,12 +345,12 @@ Public Class frm_cuadro_anual
                                             ORDER BY nombre ASC) as pivotable WHERE ENE > 0 or FEB > 0 or MAR > 0 or ABR > 0 or MAY > 0 or JUN > 0 or JUL > 0 or AGO > 0 or SEP > 0 or OCT > 0 or NOV > 0 or DIC > 0;"
 
         Dim dt6 As System.Data.DataTable = New System.Data.DataTable
-        Dim da6 As MySqlDataAdapter = New MySqlDataAdapter(cmd6)
+        Dim da6 As SqlDataAdapter = New SqlDataAdapter(cmd6)
         da6.Fill(dt6)
         ' If dt.Rows.Count <> 0 Then
         grilla.DataSource = dt6
 
-        conexion.Close()
+        conexion2.Close()
         da6.Dispose()
         cmd6.Dispose()
 
@@ -411,21 +411,21 @@ Public Class frm_cuadro_anual
     Private Sub grilla_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles grilla.CellMouseDoubleClick
         'carga con mysql
 
-        Dim cmd12 As MySqlCommand = New MySqlCommand
+        Dim cmd12 As SqlCommand = New SqlCommand
         Dim valMes As Integer  'la variable que controla el mes de busqueda
 
 
         If Connex = 0 Then
             'MODO LOCAL
-            Call conn3()
+            Call Conectar2()
 
         Else
             'MODO RED
             Call Conectar()
         End If
-        If conexion.State = 1 Then conexion.Close()
-        conexion.Open()
-        cmd12.Connection = conexion
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+        cmd12.Connection = conexion2
 
         Dim lacol As Integer
 
@@ -461,7 +461,7 @@ Public Class frm_cuadro_anual
 
         cmd12.CommandText = "SELECT FeRegistro, TipoFact, nrodocto, nroFactura, FeFact, FeVcto, MontoDocto, BCBalance, cuenta, voucher, Ldiario FROM datos_fuente where Cobr_A = '" & grilla.Item(0, e.RowIndex).Value & "' and year(FeVcto) = '" & cbo_anio.Text & "' and month(FeVcto) = '" & valMes & "'"
         Dim dt12 As System.Data.DataTable = New System.Data.DataTable
-        Dim da12 As MySqlDataAdapter = New MySqlDataAdapter(cmd12)
+        Dim da12 As SqlDataAdapter = New SqlDataAdapter(cmd12)
         da12.Fill(dt12)
 
 
@@ -472,7 +472,7 @@ Public Class frm_cuadro_anual
         frm_detalle_fact.formato_grilla()
 
 
-        conexion.Close()
+        conexion2.Close()
         da12.Dispose()
         cmd12.Dispose()
 

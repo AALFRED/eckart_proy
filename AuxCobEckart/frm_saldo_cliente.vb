@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 Imports AuxCobEckart
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports Microsoft.Office.Interop.Excel
 Imports System.Globalization
 
@@ -22,10 +22,10 @@ Imports System.Globalization
 Public Class frm_saldo_cliente
 
     Dim var As Integer
-    Dim cmd As MySqlCommand
-    Dim dr As MySqlDataReader
-    Dim com As New MySqlCommand
-    Dim rs As MySqlDataReader
+    Dim cmd As SqlCommand
+    Dim dr As SqlDataReader
+    Dim com As New SqlCommand
+    Dim rs As SqlDataReader
 
     Private mifecha As Date
     Private mifecha2 As Date
@@ -447,10 +447,10 @@ Public Class frm_saldo_cliente
         lbl_version.Text = "VERSIÓN " & System.Windows.Forms.Application.ProductVersion.ToString & " - " & System.Windows.Forms.Application.CompanyName.ToString
 
         'carga de tipo de bd
-        cbo_tipo_bd.Items.Add("BD MYSQL")
-        cbo_tipo_bd.Items.Add("BD ACCESS")
-        cbo_tipo_bd.Text = "BD MYSQL"
+        cbo_tipo_bd.Items.Add("BD SQL SERVER")
+        cbo_tipo_bd.Text = "BD SQL SERVER"
         var = 1
+        cbo_tipo_bd.Enabled = False
 
         lbl_reg.Text = ""
         lbl_reg2.Text = ""
@@ -468,7 +468,7 @@ Public Class frm_saldo_cliente
     Private Sub cmd_bus_saldo_vend_Click(sender As Object, e As EventArgs) Handles cmd_bus_saldo_clte.Click
         If var = 1 Then 'busca en mysql
 
-            Dim cmd4 As MySqlCommand = New MySqlCommand
+            Dim cmd4 As SqlCommand = New SqlCommand
 
 
             mifecha = msk_fe_ini.Text
@@ -476,23 +476,24 @@ Public Class frm_saldo_cliente
 
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
+                Call Conectar2()
+
 
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd4.Connection = conexion
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
+            cmd4.Connection = conexion2
             cmd4.CommandText = "SELECT Cobr_A, nombre, OrdenarNombre as Vendedor, Salesperson as codven, Sum(BCBalance) as Total FROM datos_fuente where cuenta = '1114001' and FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "' group by Nombre Order by Nombre ASC"
             Dim dt4 As System.Data.DataTable = New System.Data.DataTable
-            Dim da4 As MySqlDataAdapter = New MySqlDataAdapter(cmd4)
+            Dim da4 As SqlDataAdapter = New SqlDataAdapter(cmd4)
             da4.Fill(dt4)
 
             grilla.DataSource = dt4
 
-            conexion.Close()
+            conexion2.Close()
             da4.Dispose()
             cmd4.Dispose()
 
@@ -507,7 +508,7 @@ Public Class frm_saldo_cliente
             cmd_exp_excel.Enabled = True
 
         Else
-            'busca en mysql
+            'busca en access
             'estableces la connstring a la connection
             Dim Conn As New System.Data.OleDb.OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\eckart\proyecto Cobranzas\base\Cobranza_aux.mdb;Persist Security Info=False")
             'Creas el comando SELECT
@@ -555,7 +556,7 @@ Public Class frm_saldo_cliente
     End Sub
 
     Private Sub grilla_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles grilla.CellMouseClick
-        Dim cmd12 As MySqlCommand = New MySqlCommand
+        Dim cmd12 As SqlCommand = New SqlCommand
 
         If var = 1 Then
             'carga con mysql
@@ -567,27 +568,26 @@ Public Class frm_saldo_cliente
 
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
-
+                Call Conectar2()
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd12.Connection = conexion
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
+            cmd12.Connection = conexion2
 
 
             ' cmd12.CommandText = "SELECT FeRegistro, TipoFact, nrodocto, nroFactura, FeFact, FeVcto, MontoDocto, BCBalance, cuenta, voucher, Ldiario FROM eck_cobranza.datos_fuente where Cobr_A = '" & grilla.Item(0, e.RowIndex).Value & "' And Salesperson = '" & grilla1.Item(3, e.RowIndex).Value & "'"
             cmd12.CommandText = "SELECT TipoFact, nroFactura, FeFact, FeVcto, MontoDocto, BCBalance, FeRegistro FROM datos_fuente where  Cobr_A = '" & grilla.Item(0, e.RowIndex).Value & "' and cuenta = '1114001' and FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "'"
             Dim dt12 As System.Data.DataTable = New System.Data.DataTable
-            Dim da12 As MySqlDataAdapter = New MySqlDataAdapter(cmd12)
+            Dim da12 As SqlDataAdapter = New SqlDataAdapter(cmd12)
             da12.Fill(dt12)
 
             grilla2.DataSource = dt12
 
-            conexion.Close()
+            conexion2.Close()
             da12.Dispose()
             cmd12.Dispose()
 

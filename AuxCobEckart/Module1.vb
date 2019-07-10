@@ -18,12 +18,20 @@ Imports System.Data.Odbc
 Imports AuxCobEckart
 Imports System.Globalization
 Imports DataTable = System.Data.DataTable
+'::: Librerias SQL SERVER
+Imports System.Data.SqlClient
+
+
 
 Module Module1
     Public conexion As New MySqlConnection
     Public mibd As String
     Public miano As Integer
     Public perfil As Integer = 0
+
+    'PARA SQL SERVER
+    Public conexion2 As New SqlConnection
+
 
 
     'para access
@@ -119,6 +127,8 @@ Module Module1
                 'MsgBox(Mid(line.ToString, 1, 10))
 
 
+
+
                 If Mid(line.ToString, 1, 10) = "USERADMIN=" Then
                     v_userad = Mid(Trim(line), 11, 18) 'el usuario admin
                     'MsgBox(v_userad.ToString)
@@ -177,9 +187,10 @@ Module Module1
         End Using
         If conexion.State = 1 Then conexion.Close()
 
+        'con mysql
         conexion.ConnectionString = "server=" & miserver & "; Port=" & mipuerto & "; user id=" & myid & "; database=" & mibd & "; password=" & mipass & "; convert zero datetime=True"
 
-            ' Catch ex As Exception
+        ' Catch ex As Exception
         '     MsgBox(ex.Message)
         ' End Try
 
@@ -188,7 +199,107 @@ Module Module1
     End Sub
 
 
+    Sub Conectar2()
+        'CONECTA A SQL SERVER
+        ' Try
 
+        '//////////////////////
+        'CARGA DE PARAMETROS
+        Const fichero As String = "C:\eckart\proyecto Cobranzas\parametros.dat"
+        Dim texto As String = ""
+
+        Dim sr As New System.IO.StreamReader(fichero)
+        texto = sr.ReadToEnd()
+        sr.Close()
+        ' We need to read into this List.
+        Dim list As New List(Of String)
+
+        ' Open file.txt with the Using statement.
+        Using r As StreamReader = New StreamReader(fichero)
+            ' Store contents in this String.
+            Dim line As String
+
+            ' Read first line.
+            line = r.ReadLine
+
+            ' Loop over each line in file, While list is Not Nothing.
+            Do While (Not line Is Nothing)
+                ' Add this line to list.
+                list.Add(line)
+
+                'MsgBox(line.ToString)
+                'MsgBox(Mid(line.ToString, 1, 10))
+
+                If Mid(line.ToString, 1, 10) = "USERADMIN=" Then
+                    v_userad = Mid(Trim(line), 11, 18) 'el usuario admin
+                    'MsgBox(v_userad.ToString)
+                    UserAdmin = v_userad.ToString
+
+                Else
+                    If Mid(line.ToString, 1, 7) = "Server=" Then
+                        v_server = Mid(Trim(line), 8, 20)  'la ip del server
+                        'MsgBox(v_server.ToString)
+                        miserver = v_server.ToString 'asigna el valor a la v de conexion
+                    Else
+                        If Mid(line.ToString, 1, 5) = "Port=" Then
+                            v_port = Mid(Trim(line), 6, 9)  'el port
+                            'MsgBox(v_port.ToString)
+                            mipuerto = v_port.ToString
+                        Else
+
+                            If Mid(line.ToString, 1, 9) = "Database=" Then
+                                v_database = Mid(Trim(line), 10, 22) 'base de datos
+                                'MsgBox(v_database.ToString)
+                                mibd = v_database.ToString
+
+                            Else
+                                If Mid(line.ToString, 1, 5) = "User=" Then
+                                    v_userbd = Mid(Trim(line), 6, 14) 'usuario
+                                    'MsgBox(v_userbd.ToString)
+                                    myid = v_userbd.ToString 'asigna el valor a la v de conexion
+                                Else
+
+                                    If Mid(line.ToString, 1, 9) = "password=" Then
+                                        v_pass = Mid(Trim(line), 10, 18) 'password
+                                        'MsgBox(v_pass.ToString)
+                                        mipass = v_pass.ToString
+                                    Else
+                                        If Mid(line.ToString, 1, 8) = "EMPRESA=" Then
+                                            v_emp = Mid(Trim(line), 9, 17) 'password
+                                            'MsgBox(v_emp.ToString)
+                                            laemp = v_emp.ToString
+                                        Else
+
+                                            If Mid(line.ToString, 1, 10) = "SQLServer=" Then
+                                                v_sqlserv = Mid(Trim(line), 11, 27) 'password
+                                                'MsgBox(v_sqlserv.ToString)
+                                                tipobase = v_sqlserv.ToString
+                                            End If
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+                ' Read in the next line.
+                line = r.ReadLine
+            Loop
+        End Using
+        If conexion2.State = 1 Then conexion2.Close()
+
+
+        'con SqlServer
+        conexion2.ConnectionString = "Server=" & miserver & "; Database=" & mibd & "; User Id=" & myid & ";Password=" & mipass & ""
+
+
+        ' Catch ex As Exception
+        '     MsgBox(ex.Message)
+        ' End Try
+
+
+
+    End Sub
 
 
     Sub Conn2()
@@ -282,7 +393,25 @@ Module Module1
         MsgBox("Datos Borrados de la tabla", MsgBoxStyle.Information)
     End Sub
 
-    'End Function
+
+    Sub limpiar_tabla_sqlserver(ByVal tabla As String)
+        Dim strSQL As String
+
+        strSQL = "TRUNCATE TABLE " & tabla
+
+        Call Conectar2()
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+
+
+        Dim cmd As New SqlCommand(strSQL, conexion2)
+        cmd.ExecuteNonQuery()
+        conexion2.Close()
+        MsgBox("Datos Borrados de la tabla", MsgBoxStyle.Information)
+
+
+    End Sub
+
 
     Public Function GetDataExcel(ByVal fileName As String, ByVal sheetName As String) As DataTable
 

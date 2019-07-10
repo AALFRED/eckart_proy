@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 Imports AuxCobEckart
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports Microsoft.Office.Interop.Excel
 Imports System.Globalization
 
@@ -212,10 +212,10 @@ Public Class frm_tramos_vcto
         lbl_version.Text = "VERSIÓN " & System.Windows.Forms.Application.ProductVersion.ToString & " - " & System.Windows.Forms.Application.CompanyName.ToString
 
         'carga de tipo de bd
-        cbo_tipo_bd.Items.Add("BD MYSQL")
-        cbo_tipo_bd.Items.Add("BD ACCESS")
-        cbo_tipo_bd.Text = "BD MYSQL"
+        cbo_tipo_bd.Items.Add("BD SQL SERVER")
+        cbo_tipo_bd.Text = "BD SQL SERVER"
         var = 1
+        cbo_tipo_bd.Enabled = False
 
 
         'carga la fecha actual
@@ -242,19 +242,19 @@ Public Class frm_tramos_vcto
         Try
             If var = 1 Then  'busca en mysql
 
-                Dim cmd3 As MySqlCommand = New MySqlCommand
+                Dim cmd3 As SqlCommand = New SqlCommand
 
                 If Connex = 0 Then
                     'MODO LOCAL
-                    Call conn3()
+                    Call Conectar2()
 
                 Else
                     'MODO RED
-                    Call Conectar()
+                    Call Conectar2()
                 End If
 
-                If conexion.State = 1 Then conexion.Close()
-                conexion.Open()
+                If conexion2.State = 1 Then conexion2.Close()
+                conexion2.Open()
 
                 mifecha = msk_fe_ini.Text
                 mifecha2 = msk_fe_fin.Text
@@ -263,7 +263,7 @@ Public Class frm_tramos_vcto
                 valdias = txt_nro_dias.Text
                 valdias = valdias * -1
 
-                cmd3.Connection = conexion
+                cmd3.Connection = conexion2
 
                 If marca_tramo = 1 Then
                     'MENOR QUE
@@ -276,12 +276,12 @@ Public Class frm_tramos_vcto
 
 
                 Dim dt3 As System.Data.DataTable = New System.Data.DataTable
-                Dim da3 As MySqlDataAdapter = New MySqlDataAdapter(cmd3)
+                Dim da3 As SqlDataAdapter = New SqlDataAdapter(cmd3)
                 da3.Fill(dt3)
 
                 grilla.DataSource = dt3
 
-                conexion.Close()
+                conexion2.Close()
                 da3.Dispose()
                 cmd3.Dispose()
 

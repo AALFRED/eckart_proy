@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 Imports AuxCobEckart
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports Microsoft.Office.Interop.Excel
 Imports System.Globalization
 
@@ -22,10 +22,10 @@ Imports System.Globalization
 Public Class frm_saldos_vend
 
     Dim var As Integer
-    Dim cmd As MySqlCommand
-    Dim dr As MySqlDataReader
-    Dim com As New MySqlCommand
-    Dim rs As MySqlDataReader
+    Dim cmd As SqlCommand
+    Dim dr As SqlDataReader
+    Dim com As New SqlCommand
+    Dim rs As SqlDataReader
 
     Private mifecha As Date
     Private mifecha2 As Date
@@ -394,10 +394,11 @@ Public Class frm_saldos_vend
 
 
         'carga de tipo de bd
-        cbo_tipo_bd.Items.Add("BD MYSQL")
-        cbo_tipo_bd.Items.Add("BD ACCESS")
-        cbo_tipo_bd.Text = "BD MYSQL"
+        cbo_tipo_bd.Items.Add("BD SQL SERVER")
+        cbo_tipo_bd.Text = "BD SQL SERVER"
         var = 1
+        cbo_tipo_bd.Enabled = False
+
 
         lbl_reg.Text = ""
         lbl_reg2.Text = ""
@@ -412,33 +413,33 @@ Public Class frm_saldos_vend
     Private Sub cmd_bus_saldo_vend_Click(sender As Object, e As EventArgs) Handles cmd_bus_saldo_vend.Click
         If var = 1 Then 'busca en mysql
 
-            Dim cmd5 As MySqlCommand = New MySqlCommand
+            Dim cmd5 As SqlCommand = New SqlCommand
 
             mifecha = msk_fe_ini.Text
             mifecha2 = msk_fe_fin.Text
 
 
-            If conexion.State = 1 Then conexion.Close()
+            If conexion2.State = 1 Then conexion2.Close()
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
+                Call Conectar2()
 
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
             '
-            conexion.Open()
-            cmd5.Connection = conexion
+            conexion2.Open()
+            cmd5.Connection = conexion2
             'where cuenta = '1114001'
             cmd5.CommandText = "SELECT OrdenarNombre as Vendedor, Salesperson as codven, Sum(BCBalance) as Total FROM datos_fuente  where FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "' and cuenta = '1114001' group by OrdenarNombre  Order by OrdenarNombre  ASC"
             Dim dt5 As System.Data.DataTable = New System.Data.DataTable
-            Dim da5 As MySqlDataAdapter = New MySqlDataAdapter(cmd5)
+            Dim da5 As SqlDataAdapter = New SqlDataAdapter(cmd5)
             da5.Fill(dt5)
 
             grilla.DataSource = dt5
 
-            conexion.Close()
+            conexion2.Close()
             da5.Dispose()
             cmd5.Dispose()
 
@@ -498,36 +499,36 @@ Public Class frm_saldos_vend
 
     Private Sub grilla_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles grilla.CellMouseDoubleClick
         If var = 1 Then
-            'carga con mysql
+            'carga con sql server
 
             grilla2.Columns.Clear()
 
 
-            Dim cmd12 As MySqlCommand = New MySqlCommand
+            Dim cmd12 As SqlCommand = New SqlCommand
 
             If conexion.State = 1 Then conexion.Close()
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
+                Call Conectar2()
 
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
 
-            conexion.Open()
-            cmd12.Connection = conexion
+            conexion2.Open()
+            cmd12.Connection = conexion2
 
 
             ' cmd12.CommandText = "SELECT FeRegistro, TipoFact, nrodocto, nroFactura, FeFact, FeVcto, MontoDocto, BCBalance, cuenta, voucher, Ldiario FROM eck_cobranza.datos_fuente where Cobr_A = '" & grilla.Item(0, e.RowIndex).Value & "' And Salesperson = '" & grilla1.Item(3, e.RowIndex).Value & "'"
             cmd12.CommandText = "SELECT Cobr_A as Rut, Nombre as cliente, TipoFact, nroFactura, FeFact, FeVcto, MontoDocto, BCBalance, FeRegistro FROM datos_fuente where Salesperson = '" & grilla.Item(1, e.RowIndex).Value & "' and FeVcto between '" & mifecha.ToString("yyyy-MM-dd") & "' and '" & mifecha2.ToString("yyyy-MM-dd") & "' and cuenta = '1114001'"
             Dim dt12 As System.Data.DataTable = New System.Data.DataTable
-            Dim da12 As MySqlDataAdapter = New MySqlDataAdapter(cmd12)
+            Dim da12 As SqlDataAdapter = New SqlDataAdapter(cmd12)
             da12.Fill(dt12)
 
             grilla2.DataSource = dt12
 
-            conexion.Close()
+            conexion2.Close()
             da12.Dispose()
             cmd12.Dispose()
 

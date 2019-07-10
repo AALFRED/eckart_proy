@@ -10,6 +10,7 @@ Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports System.Net
 Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports AuxCobEckart
 
 
@@ -29,6 +30,10 @@ Public Class frm_Acceso
     Dim da As New MySqlDataAdapter
     Dim dr As MySqlDataReader
 
+    'Para SqlServer
+    Dim da1 As New SqlDataAdapter
+    Dim dr1 As SqlDataReader
+
     Dim ds As New DataSet
     Dim sw As Boolean = False
     Dim dt As New DataTable
@@ -37,8 +42,17 @@ Public Class frm_Acceso
     Dim rs As MySqlDataReader
     Dim rs1 As MySqlDataReader
 
+    'Para SqlServer
+    Dim com1 As New SqlCommand
+    Dim rs11 As SqlDataReader
+    Dim rs2 As SqlDataReader
+
     Dim cmd As MySqlCommand = New MySqlCommand
     Dim cmd2 As MySqlCommand = New MySqlCommand
+
+    'Para SqlServer
+    Dim cmd1 As SqlCommand = New SqlCommand
+    Dim cmd22 As SqlCommand = New SqlCommand
 
 
     Public Sub registra_entrada(bandera)
@@ -47,29 +61,66 @@ Public Class frm_Acceso
 
         'Try
         If Connex = 0 Then
-                'MODO LOCAL
-                Call conn3()
+            'MODO LOCAL
+            Call conn3()
 
-            Else
-                'MODO RED
-                Call Conectar()
-            End If
+        Else
+            'MODO RED
+            Call Conectar()
+        End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+        If conexion.State = 1 Then conexion.Close()
+        conexion.Open()
 
-            If bandera = False Then
+        If bandera = False Then
 
-                cmd = New MySqlCommand("INSERT INTO ctrl_acceso (id, usuario, acceso) Values (0, '" & txt_user.Text & "', '" & (mifecha) & "')", conexion)
-                cmd.ExecuteNonQuery()
-                cmd.Dispose()
-                conexion.Close()
-                cmd_ingreso.Enabled = True
-            Else
-                cmd_ingreso.Enabled = True
-            End If
+            cmd = New MySqlCommand("INSERT INTO ctrl_acceso (id, usuario, acceso) Values (0, '" & txt_user.Text & "', '" & (mifecha) & "')", conexion)
+            cmd.ExecuteNonQuery()
             cmd.Dispose()
             conexion.Close()
+            cmd_ingreso.Enabled = True
+        Else
+            cmd_ingreso.Enabled = True
+        End If
+        cmd.Dispose()
+        conexion.Close()
+
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
+
+        'End Try
+    End Sub
+
+    Public Sub registra_entrada2(bandera)
+        'PARA SQL SERVER
+        Dim mifecha As String
+        mifecha = System.DateTime.Now.ToString((" yyyy-MM-dd HH:mm:ss"))
+
+        'Try
+        If Connex = 0 Then
+            'MODO LOCAL
+            Call Conectar2()
+
+        Else
+            'MODO RED
+            Call Conectar2()
+        End If
+
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+
+        If bandera = False Then
+
+            cmd1 = New SqlCommand("INSERT INTO ctrl_acceso (usuario, acceso) Values ('" & txt_user.Text & "', '" & (mifecha) & "')", conexion2)
+            cmd1.ExecuteNonQuery()
+            cmd1.Dispose()
+            conexion2.Close()
+            cmd_ingreso.Enabled = True
+        Else
+            cmd_ingreso.Enabled = True
+        End If
+        cmd1.Dispose()
+        conexion2.Close()
 
         'Catch ex As Exception
         '    MsgBox(ex.Message)
@@ -92,22 +143,63 @@ Public Class frm_Acceso
         End If
 
         If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+        conexion.Open()
 
-            sSql = "Select * From usuarios where usuario= '" & txt_user.Text & "' and pass= '" & txt_pass.Text & "'"
-            da = New MySqlDataAdapter(sSql, conexion)
-            ds.Clear()
-            da.Fill(ds, "usuarios")
+        sSql = "Select * From usuarios where usuario= '" & txt_user.Text & "' and pass= '" & txt_pass.Text & "'"
+        da = New MySqlDataAdapter(sSql, conexion)
+        ds.Clear()
+        da.Fill(ds, "usuarios")
 
-            If (ds.Tables("usuarios").Rows.Count() <> 0) Then
+        If (ds.Tables("usuarios").Rows.Count() <> 0) Then
 
-                ' MessageBox.Show("Usuario Encontrado", "Validacion Usuario")
-                sw = True
-            Else
-                MessageBox.Show("Usuario o Password no Válido", "Validacion de Usuario")
-                sw = False
+            ' MessageBox.Show("Usuario Encontrado", "Validacion Usuario")
+            sw = True
+        Else
+            MessageBox.Show("Usuario o Password no Válido", "Validacion de Usuario")
+            sw = False
 
-            End If
+        End If
+
+        'Catch ex As Exception
+        '    MessageBox.Show(ex.Message)
+
+        'End Try
+        Return (sw)
+        txt_pass.Select()
+    End Function
+
+    Function ExisteUsuario2(ByVal usuario As String, ByVal password As String) As Boolean
+
+        'PARA SQL SERVER
+
+        'Try
+
+        If Connex = 0 Then
+            'MODO LOCAL
+            Call Conectar2()
+
+        Else
+            'MODO RED
+            Call Conectar2()
+        End If
+
+        If conexion2.State = 1 Then conexion2.Close()
+        conexion2.Open()
+
+        sSql = "Select * From usuarios where usuario= '" & txt_user.Text & "' and pass= '" & txt_pass.Text & "'"
+        da1 = New SqlDataAdapter(sSql, conexion2)
+        ds.Clear()
+        da1.Fill(ds, "usuarios")
+
+        If (ds.Tables("usuarios").Rows.Count() <> 0) Then
+
+            ' MessageBox.Show("Usuario Encontrado", "Validacion Usuario")
+            sw = True
+        Else
+            MessageBox.Show("Usuario o Password no Válido", "Validacion de Usuario")
+            sw = False
+
+        End If
 
         'Catch ex As Exception
         '    MessageBox.Show(ex.Message)
@@ -130,11 +222,11 @@ Public Class frm_Acceso
 
         If Connex = 0 Then
             'MODO LOCAL
-            Call conn3()
+            Call Conectar2()
 
         Else
             'MODO RED
-            Call Conectar()
+            Call Conectar2()
         End If
 
 
@@ -201,29 +293,29 @@ Public Class frm_Acceso
 
             If Connex = 0 Then
                 'MODO LOCAL
-                Call conn3()
+                Call Conectar2()
 
             Else
                 'MODO RED
-                Call Conectar()
+                Call Conectar2()
             End If
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
             If txt_user.Text <> "" Then
                 txt_user.Text.ToUpper() 'cambia a mayusculas
 
                 sql = "SELECT usuario, perfil, bloqueo, id FROM usuarios where usuario= '" & txt_user.Text & "'"
-                com = New MySqlCommand(sql, conexion)
-                rs = com.ExecuteReader()
-                If rs.HasRows() Then
-                    rs.Read()
+                com1 = New SqlCommand(sql, conexion2)
+                rs11 = com1.ExecuteReader()
+                If rs11.HasRows() Then
+                    rs11.Read()
 
-                    txt_user.Text = rs.GetString(0)
-                    perfil = rs.GetString(1)
-                    bloqueo = rs.GetString(2)
-                    Id_reg = rs.GetString(3)
+                    txt_user.Text = rs11.GetString(0)
+                    perfil = rs11.GetInt32(1)
+                    bloqueo = rs11.GetInt32(2)
+                    Id_reg = rs11.GetInt32(3)
                     sw = True
                 Else
                     txt_user.Text = ""
@@ -244,7 +336,7 @@ Public Class frm_Acceso
                         MsgBox("Este Usuario se encuentra bloqueado, verifique!")
                         txt_user.Select()
                     Else
-                        conexion.Close()
+                        conexion2.Close()
                         'Call Lastaccess()
 
                         level = perfil  'le pasa el valor del perfil que tiene el usuario
@@ -253,13 +345,13 @@ Public Class frm_Acceso
 
                     End If
                 Else
-                    conexion.Close()
+                    conexion2.Close()
                     txt_user.Select()
 
 
                 End If
-                rs.Dispose()
-                conexion.Close()
+                rs11.Dispose()
+                conexion2.Close()
             End If
 
 
@@ -298,7 +390,10 @@ Public Class frm_Acceso
     Private Sub txt_pass_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_pass.KeyPress
 
 
-        Dim dr3 As MySqlDataReader
+        'Dim dr3 As MySqlDataReader
+
+        'para sql server
+        Dim dr3 As SqlDataReader
         Dim bandera As Boolean
 
 
@@ -314,25 +409,25 @@ Public Class frm_Acceso
 
                         If Connex = 0 Then
                             'MODO LOCAL
-                            Call conn3()
+                            Call Conectar2()
 
                         Else
                             'MODO RED
-                            Call Conectar()
+                            Call Conectar2()
                         End If
 
-                        If conexion.State = 1 Then conexion.Close()
-                        conexion.Open()
+                        If conexion2.State = 1 Then conexion2.Close()
+                        conexion2.Open()
 
-                        cmd2.CommandText = ("SELECT * FROM usuarios where usuario= '" & txt_user.Text & "' and pass = '" & txt_pass.Text & "'")
-                        cmd2.Connection = conexion
-                        cmd2.CommandType = CommandType.Text
-                        dr3 = cmd2.ExecuteReader
+                        cmd22.CommandText = ("SELECT * FROM usuarios where usuario= '" & txt_user.Text & "' and pass = '" & txt_pass.Text & "'")
+                        cmd22.Connection = conexion2
+                        cmd22.CommandType = CommandType.Text
+                        dr3 = cmd22.ExecuteReader
 
                         If dr3.Read = False Then
                             'cmd2.ExecuteNonQuery()
                             MessageBox.Show("La Clave o el Usuario no son válidos", "Validación de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            conexion.Close()
+                            conexion2.Close()
 
                             bandera = True
                             txt_pass.Select()
@@ -345,7 +440,7 @@ Public Class frm_Acceso
 
 
                         dr3.Dispose()
-                        conexion.Close()
+                        conexion2.Close()
                         cmd_ingreso.Enabled = True
                         cmd_ingreso.Select()
 
@@ -365,10 +460,10 @@ Public Class frm_Acceso
 
     Private Sub cmd_ingreso_Click(sender As Object, e As EventArgs) Handles cmd_ingreso.Click
 
-        If ExisteUsuario(txt_user.Text, txt_pass.Text) Then
+        If ExisteUsuario2(txt_user.Text, txt_pass.Text) Then
             Me.Hide()
 
-            registra_entrada(bandera)
+            registra_entrada2(bandera)
 
 
 
@@ -404,8 +499,8 @@ Public Class frm_Acceso
 
 
             Principal.Show()
-            Else
-                Exit Sub
+        Else
+            Exit Sub
             End If
 
 

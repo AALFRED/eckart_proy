@@ -14,12 +14,12 @@ Imports System.Runtime.InteropServices
 Imports System.Data.OleDb
 Imports System.Data.Odbc
 Imports MySql.Data
-Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 
 Public Class frm_cliente
 
     Dim var As Integer
-    Dim dr3 As MySqlDataReader
+    Dim dr3 As SqlDataReader
 
 
     Sub formato_grilla()
@@ -68,14 +68,14 @@ Public Class frm_cliente
 
     Public Function cargacombo(ByVal TABLENAME As String, ByVal fldName As String, ByVal cmbname As ComboBox)
 
-        If var = 1 Then 'buscar por mysql
-            Dim cmd1 As New MySqlCommand
-            Call conn1()
+        If var = 1 Then 'buscar por sqlserver
+            Dim cmd1 As New SqlCommand
+            Call Conectar2()
 
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
-            cmd1 = New MySqlCommand("select " & fldName & " from " & TABLENAME & " order by " & fldName, conexion)
+            cmd1 = New SqlCommand("select " & fldName & " from " & TABLENAME & " order by " & fldName, conexion2)
 
 
             dr3 = cmd1.ExecuteReader
@@ -84,7 +84,7 @@ Public Class frm_cliente
                 cmbname.Items.Add(dr3(fldName))
             Loop
             dr3.Close()
-            conexion.Close()
+            conexion2.Close()
             cmd1.Dispose()
         Else
             If var = 2 Then 'busca Access
@@ -133,7 +133,7 @@ Public Class frm_cliente
 
         Me.CenterToScreen()
 
-        Me.Text = "ECKART / AUXILIAR DE COBRANZA - MANEJO DE VENDEDORES"
+        Me.Text = "ECKART / AUXILIAR DE COBRANZA - MANEJO DE CLIENTES"
 
 
         'Create a StatusBar
@@ -166,11 +166,11 @@ Public Class frm_cliente
 
 
         cmd_cargar_mysql.Enabled = False
-            cmd_cargar_access.Enabled = False
-            cmd_seleccionar.Enabled = False
-            cmd_truncate_bd.Enabled = False
+        cmd_cargar_access.Enabled = False
+        cmd_seleccionar.Enabled = False
+        cmd_truncate_bd.Enabled = False
 
-            lbl_nroreg.Text = ""
+        lbl_nroreg.Text = ""
             'carga de tipo de bd
             cbo_tpo.Items.Add("BD MYSQL")
             cbo_tpo.Items.Add("BD ACCESS")
@@ -228,82 +228,91 @@ Public Class frm_cliente
     Private Sub cmd_cargar_Click(sender As Object, e As EventArgs) Handles cmd_cargar_access.Click
         ':::Declaramos nuestra variable Sql que almacenara nuestra consuta
         Dim Sql As String = ""
+
+        'Try
+
+
+
         ':::Usamos un ciclo For Each para recorrer nuestro DataGridView llamado grilla
         For Each Row As DataGridViewRow In grilla.Rows
-            ':::Obtenemos los valores que vamos a pasar a nuestra consulta para ser guardados
-            ':::rut cliente
-            Dim rut As String = Row.Cells("F1").Value
-            ':::nombre
-            Dim nombreClie As String = Row.Cells("F2").Value
-            ':::cobrar_a
-            Dim cobrar As String = Row.Cells("F3").Value
-            ':::pais
-            Dim pais As String = Row.Cells("F4").Value
-            'moneda
-            Dim moneda As String = Row.Cells("F5").Value
-            'idioma
-            Dim idioma As String = Row.Cells("F6").Value
-            'region
-            Dim region As String = Row.Cells("F7").Value
-            'tipo
-            Dim tipo As String = Row.Cells("F8").Value
-            'planta
-            Dim planta As String = Row.Cells("F9").Value
-            'vendedor
-            Dim vendedor As String = Row.Cells("F10").Value
-            'observa
-            Dim observa As String = Row.Cells("F11").Value
-            'zona horaria
-            Dim zona_horaria1 As String = Row.Cells("F12").Value
-            'datos completos
-            Dim datos_completos As String = Row.Cells("F13").Value
-            'activo
-            Dim activo As String = Row.Cells("F14").Value
-            'tabla_dscto
-            Dim dscto As String = Row.Cells("F15").Value
-            'precio_fijo
-            Dim precio_fijo As String = Row.Cells("F16").Value
-            'clase
-            Dim clase As String = Row.Cells("F17").Value
-            'Sic
-            Dim sic As String = Row.Cells("F18").Value
-            'porc dscto
-            Dim porc_dscto As String = Row.Cells("F19").Value
-            'terminos
-            Dim terminos As String = Row.Cells("F20").Value
-            'lista flete
-            Dim lista_flete As String = Row.Cells("F21").Value
-            'min_ps_fit
-            Dim min_ps_fit As Integer = Row.Cells("F22").Value
-            'termino flete
-            Dim termino_flete As String = Row.Cells("F23").Value
-            'tipo_transf
-            Dim tipo_transf As String = Row.Cells("F24").Value
-            'via_embarque
-            Dim via_embarque As String = Row.Cells("F25").Value
-            'ciudad
-            Dim ciudad As String = Row.Cells("F26").Value
-            'estado
-            Dim estado As String = Row.Cells("F27").Value
-            'cod postal
-            Dim cod_postal As String = Row.Cells("F28").Value
-            'cod relacion empresa
-            Dim cod_relac_emp As String = Row.Cells("F29").Value
-            'nom relacion
-            Dim nom_relaciom As String = Row.Cells("F30").Value
+                ':::Obtenemos los valores que vamos a pasar a nuestra consulta para ser guardados
+                ':::rut cliente
+                Dim rut As String = Row.Cells("F1").Value
+                ':::nombre
+                Dim nombreClie As String = Row.Cells("F2").Value
+                ':::cobrar_a
+                Dim cobrar As String = Row.Cells("F3").Value
+                ':::pais
+                Dim pais As String = Row.Cells("F4").Value
+                'moneda
+                Dim moneda As String = Row.Cells("F5").Value
+                'idioma
+                Dim idioma As String = Row.Cells("F6").Value
+                'region
+                Dim region As String = Row.Cells("F7").Value
+                'tipo
+                Dim tipo As String = Row.Cells("F8").Value
+                'planta
+                Dim planta As String = Row.Cells("F9").Value
+                'vendedor
+                Dim vendedor As String = Row.Cells("F10").Value
+                'observa
+                Dim observa As String = Row.Cells("F11").Value
+                'zona horaria
+                Dim zona_horaria1 As String = Row.Cells("F12").Value
+                'datos completos
+                Dim datos_completos As String = Row.Cells("F13").Value
+                'activo
+                Dim activo As String = Row.Cells("F14").Value
+                'tabla_dscto
+                Dim dscto As String = Row.Cells("F15").Value
+                'precio_fijo
+                Dim precio_fijo As String = Row.Cells("F16").Value
+                'clase
+                Dim clase As String = Row.Cells("F17").Value
+                'Sic
+                Dim sic As String = Row.Cells("F18").Value
+                'porc dscto
+                Dim porc_dscto As String = Row.Cells("F19").Value
+                'terminos
+                Dim terminos As String = Row.Cells("F20").Value
+                'lista flete
+                Dim lista_flete As String = Row.Cells("F21").Value
+                'min_ps_fit
+                Dim min_ps_fit As Integer = Row.Cells("F22").Value
+                'termino flete
+                Dim termino_flete As String = Row.Cells("F23").Value
+                'tipo_transf
+                Dim tipo_transf As String = Row.Cells("F24").Value
+                'via_embarque
+                Dim via_embarque As String = Row.Cells("F25").Value
+                'ciudad
+                Dim ciudad As String = Row.Cells("F26").Value
+                'estado
+                Dim estado As String = Row.Cells("F27").Value
+                'cod postal
+                Dim cod_postal As String = Row.Cells("F28").Value
+                'cod relacion empresa
+                Dim cod_relac_emp As String = Row.Cells("F29").Value
+                'nom relacion
+                Dim nom_relaciom As String = Row.Cells("F30").Value
 
 
 
-            ':::Creamos nuestra consulta de tipo Insert y le pasamos nuestros valores
-            Sql = "Insert into Cliente (clie, Ordenar_nombre, Cobrar_A, pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion) " &
-            " values ('" & rut & "', '" & nombreClie & "', '" & cobrar & "', '" & pais & "', '" & moneda & "', '" & idioma & "', '" & region & "', '" & tipo & "', '" & planta & "', '" & vendedor & "', '" & observa & "', '" & zona_horaria1 & "', '" & datos_completos & "', '" & activo & "', '" & dscto & "','" & precio_fijo & "', '" & clase & "', '" & sic & "', '" & porc_dscto & "'" &
-                       ", '" & terminos & "', '" & lista_flete & "', '" & min_ps_fit & "', '" & termino_flete & "', '" & tipo_transf & "', '" & via_embarque & "', '" & ciudad & "', '" & estado & "', '" & cod_postal & "', '" & cod_relac_emp & "', '" & nom_relaciom & "')"
-            ':::Llamamos el procedimiento que hemos creado en el modulo y le pasamos el parametro que es la consulta SQL
-            Exportar_Access(Sql)
-        Next
+                ':::Creamos nuestra consulta de tipo Insert y le pasamos nuestros valores
+                Sql = "Insert into Cliente (clie, Ordenar_nombre, Cobrar_A, pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion) " &
+                " values ('" & rut & "', '" & nombreClie & "', '" & cobrar & "', '" & pais & "', '" & moneda & "', '" & idioma & "', '" & region & "', '" & tipo & "', '" & planta & "', '" & vendedor & "', '" & observa & "', '" & zona_horaria1 & "', '" & datos_completos & "', '" & activo & "', '" & dscto & "','" & precio_fijo & "', '" & clase & "', '" & sic & "', '" & porc_dscto & "'" &
+                           ", '" & terminos & "', '" & lista_flete & "', '" & min_ps_fit & "', '" & termino_flete & "', '" & tipo_transf & "', '" & via_embarque & "', '" & ciudad & "', '" & estado & "', '" & cod_postal & "', '" & cod_relac_emp & "', '" & nom_relaciom & "')"
+                ':::Llamamos el procedimiento que hemos creado en el modulo y le pasamos el parametro que es la consulta SQL
+                Exportar_Access(Sql)
+            Next
 
-        MsgBox("Registros importados exitosamente", MsgBoxStyle.Information, ":: Aprendamos de Programación:::")
+        MsgBox("Registros importados exitosamente", MsgBoxStyle.Information, "Importación de Datoas")
         lbl_nroreg.Text = "Total registros exportados: " & grilla.RowCount
+
+        'Catch ex As Exception
+
+        'End Try
     End Sub
 
     Private Sub cmd_cancelar_Click(sender As Object, e As EventArgs) Handles cmd_cancelar.Click
@@ -326,7 +335,7 @@ Public Class frm_cliente
     End Sub
 
     Private Sub cmd_cargar2_Click(sender As Object, e As EventArgs) Handles cmd_cargar_mysql.Click
-        Dim cmd As MySqlCommand = New MySqlCommand
+        Dim cmd As SqlCommand = New SqlCommand
 
         Dim rut As String
         ':::nombre
@@ -437,9 +446,9 @@ Public Class frm_cliente
                     nom_relaciom = .Rows(i).Cells(29).Value.ToString() 'descrip cuenta
 
 
-                    cmd = New MySqlCommand("Insert Into cliente (id, Clie, Ordenar_nombre, Cobrar_A, Pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion)" &
+                    cmd = New SqlCommand("Insert Into cliente (id, Clie, Ordenar_nombre, Cobrar_A, Pais, moneda, idioma, region, tipo, planta, vendedor, observa, zona_horaria, datos_completos, activo, tabla_dscto, precio_fijo, clase, sic, porc_dscto, terminos, lista_flete, min_ps_fit, terms_flete, tipo_transf, via_embarque, ciudad, estado, cod_postal, cod_relacion, nom_relacion)" &
        " Values (0, '" & rut & "', '" & nombreClie & "', '" & cobrar & "', '" & pais & "', '" & moneda & "', '" & idioma & "', '" & region & "', '" & tipo & "', '" & planta & "', '" & vendedor & "', '" & observa & "', " &
-       " '" & zona_horaria1 & "', '" & datos_completos & "', '" & activo & "', '" & dscto & "', '" & precio_fijo & "', '" & clase & "', '" & sic & "', '" & porc_dscto & "', '" & terminos & "', '" & lista_flete & "', '" & min_ps_fit & "', '" & termino_flete & "', '" & tipo_transf & "', '" & via_embarque & "', '" & ciudad & "', '" & estado & "', '" & cod_postal & "', '" & cod_relac_emp & "', '" & nom_relaciom & "')", conexion)
+       " '" & zona_horaria1 & "', '" & datos_completos & "', '" & activo & "', '" & dscto & "', '" & precio_fijo & "', '" & clase & "', '" & sic & "', '" & porc_dscto & "', '" & terminos & "', '" & lista_flete & "', '" & min_ps_fit & "', '" & termino_flete & "', '" & tipo_transf & "', '" & via_embarque & "', '" & ciudad & "', '" & estado & "', '" & cod_postal & "', '" & cod_relac_emp & "', '" & nom_relaciom & "')", conexion2)
                     cmd.ExecuteNonQuery()
                     Me.Refresh()
 
@@ -449,7 +458,7 @@ Public Class frm_cliente
 
             End With
 
-            conexion.Close()
+            conexion2.Close()
             MsgBox("Datos Almacenados correctamente", MsgBoxStyle.Information)
             Cursor.Current = Cursors.Default
 
@@ -465,7 +474,7 @@ Public Class frm_cliente
     Private Sub cbo_tpo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_tpo.SelectedIndexChanged
 
         Select Case cbo_tpo.Text
-            Case "BD MYSQL"
+            Case "BD SQL SERVER"
 
 
 
@@ -495,7 +504,7 @@ Public Class frm_cliente
     End Sub
 
     Private Sub txt_rutclie_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_rutclie.KeyPress
-        Dim cmd1 As MySqlCommand = New MySqlCommand
+        Dim cmd1 As SqlCommand = New SqlCommand
 
         Try
 
@@ -506,17 +515,17 @@ Public Class frm_cliente
                     If var = 1 Then
 
 
-                        Call conn1()
-                        cmd1.Connection = conexion
+                        Call Conectar2()
+                        cmd1.Connection = conexion2
                         'cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM eck_cobranza.datos_fuente  where salesperson = '" & txt_rut.Text & "' group by Cobr_A order by nombre ASC "
                         cmd1.CommandText = "SELECT Cobr_A as Rut, Salesperson as codven, OrdenarNombre as Vendedor, Nombre as cliente FROM datos_fuente  where Cobr_A = '" & txt_rutclie.Text & "' group by Salesperson order by Ordenarnombre ASC"
                         Dim dt1 As System.Data.DataTable = New System.Data.DataTable
-                        Dim da2 As MySqlDataAdapter = New MySqlDataAdapter(cmd1)
+                        Dim da2 As SqlDataAdapter = New SqlDataAdapter(cmd1)
                         da2.Fill(dt1)
 
                         grilla2.DataSource = dt1
 
-                        conexion.Close()
+                        conexion2.Close()
                         da2.Dispose()
                         cmd1.Dispose()
 
@@ -551,7 +560,7 @@ Public Class frm_cliente
 
     Private Sub cbo_tpo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cbo_tpo.SelectedValueChanged
         Select Case cbo_tpo.Text
-            Case "BD MYSQL"
+            Case "BD SQL SERVER"
 
 
 
@@ -578,7 +587,7 @@ Public Class frm_cliente
 
     Private Sub cbo_tpo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cbo_tpo.SelectionChangeCommitted
         Select Case cbo_tpo.Text
-            Case "BD MYSQL"
+            Case "BD SQL SERVER"
 
 
 
@@ -618,17 +627,17 @@ Public Class frm_cliente
     End Sub
 
     Private Sub cmd_quitar_vend_Click(sender As Object, e As EventArgs) Handles cmd_quitar_vend.Click
-        Dim cmd3 As MySqlCommand
+        Dim cmd3 As SqlCommand
 
         If var = 1 Then
             'con mysql
-            Call conn1()
-            If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
-            cmd3 = New MySqlCommand("Update datos_fuente set Salesperson = '0000' where Salesperson = '" & lbl_cod_vend.Text & "' and Cobr_A = '" & txt_rutclie.Text & "'", conexion)
+            Call Conectar2()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
+            cmd3 = New SqlCommand("Update datos_fuente set Salesperson = '0000' where Salesperson = '" & lbl_cod_vend.Text & "' and Cobr_A = '" & txt_rutclie.Text & "'", conexion2)
 
             cmd3.ExecuteNonQuery()
-            conexion.Close()
+            conexion2.Close()
             cmd3.Dispose()
 
             MsgBox("Modificación realizada.", MsgBoxStyle.Information)
@@ -642,16 +651,16 @@ Public Class frm_cliente
     End Sub
 
     Private Sub cmd_asigna_vend_Click(sender As Object, e As EventArgs) Handles cmd_asigna_vend.Click
-        Dim cmd3 As MySqlCommand
+        Dim cmd3 As SqlCommand
 
         If var = 1 Then
-            'con mysql
-            Call conn1()
-            conexion.Open()
-            cmd3 = New MySqlCommand("Update datos_fuente set Salesperson = '" & lbl_cod_vend.Text & "', OrdenarNombre = '" & cbo_vend.Text & "' where OrdenarNombre = '" & lbl_vend_actual.Text & "' and Cobr_A = '" & txt_rutclie.Text & "'", conexion)
+            'con sqlserver
+            Call Conectar2()
+            conexion2.Open()
+            cmd3 = New SqlCommand("Update datos_fuente set Salesperson = '" & lbl_cod_vend.Text & "', OrdenarNombre = '" & cbo_vend.Text & "' where OrdenarNombre = '" & lbl_vend_actual.Text & "' and Cobr_A = '" & txt_rutclie.Text & "'", conexion2)
 
             cmd3.ExecuteNonQuery()
-            conexion.Close()
+            conexion2.Close()
             cmd3.Dispose()
 
             MsgBox("Modificación realizada.", MsgBoxStyle.Information)
@@ -668,20 +677,20 @@ Public Class frm_cliente
         If var = 1 Then
 
             Dim sql As String
-            Dim cmd7 As MySqlCommand = New MySqlCommand
-            Dim rs9 As MySqlDataReader
+            Dim cmd7 As SqlCommand = New SqlCommand
+            Dim rs9 As SqlDataReader
 
-            conexion.Close()
+            conexion2.Close()
 
-            Call conn1()
-            ' If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            Call Conectar2()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
 
-            cmd7.Connection = conexion
+            cmd7.Connection = conexion2
             sql = "SELECT * FROM vendedor where nombre = '" & cbo_vend.Text & "'"
 
-            cmd7 = New MySqlCommand(sql, conexion)
+            cmd7 = New SqlCommand(sql, conexion2)
 
             rs9 = cmd7.ExecuteReader()
             rs9.Read()
@@ -730,20 +739,20 @@ Public Class frm_cliente
         If var = 1 Then
 
             Dim sql As String
-            Dim cmd7 As MySqlCommand = New MySqlCommand
-            Dim rs9 As MySqlDataReader
+            Dim cmd7 As SqlCommand = New SqlCommand
+            Dim rs9 As SqlDataReader
 
-            conexion.Close()
+            conexion2.Close()
 
-            Call conn1()
-            ' If conexion.State = 1 Then conexion.Close()
-            conexion.Open()
+            Call Conectar2()
+            If conexion2.State = 1 Then conexion2.Close()
+            conexion2.Open()
 
 
-            cmd7.Connection = conexion
+            cmd7.Connection = conexion2
             sql = "SELECT * FROM eck_cobranza.vendedor where nombre = '" & cbo_vend.Text & "'"
 
-            cmd7 = New MySqlCommand(sql, conexion)
+            cmd7 = New SqlCommand(sql, conexion2)
 
             rs9 = cmd7.ExecuteReader()
             rs9.Read()
